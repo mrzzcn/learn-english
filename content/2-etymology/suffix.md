@@ -1,0 +1,50 @@
+# 后缀：决定词性
+
+**后缀加在词尾，最主要的作用是改变词性。** 后缀本来就带着自己的意思和词性，接到哪个词后面，就把这个意思和词性带给整个词。下表按“加上后缀以后变成什么词性”分组。
+
+| 变成 | 后缀 | 本义和推导 | 拆词例子 |
+| --- | --- | --- | --- |
+| **名词** | **-er** | “和某件事打交道的人” → 做这件事的人 | eat → **eater** 吃东西的人<br/>teach → **teacher** 教的人，老师 |
+| | **-or** | 和 -er 是同一个意思。从拉丁语来的词多用 -or，英语本土的词多用 -er | act → **actor** 做事的人 → 演戏的人，演员<br/>visit → **visitor** 来看望的人，参观者<br/>invent → **inventor** 发明家 |
+| | **-ist** | “做某事、造某物的人” | art → **artist** 艺术家<br/>science → **scientist** 科学家：1834 年仿照 artist 造的词 |
+| | **-ian** | “属于……的” → 属于某一行的人 | music → **musician** 精通音乐的人，音乐家 |
+| | **-ant** | 本来是“正在做……”的词尾 → 正在做这件事的人 | assist 本义“站在旁边” → **assistant** 站在旁边帮忙的人，助手 |
+| | **-tion**、**-sion** | 其实都是 -ion，把动词变成表示“动作、状态”的名词。t 或 s 是前面词干带来的 | act → **action** 做这件事，行动<br/>invent → **invention**：invent 本义是“碰上、找到”，invention 最早就是“发现”，后来才是“发明”<br/>decide → **decision**：decide 本义是“切断”，一刀切下去就是“做了决定”；变成名词时词干里的 d 换成了 s，再加 -ion，所以是 -sion |
+| | **-ment** | 动作的结果，或做这件事的手段 | move → **movement** 移动这件事，运动<br/>agree → **agreement** 同意的结果，协议 |
+| | **-ness** | 加在形容词后，表示“……的状态、性质” | happy → **happiness**：happy 最早是“运气好的”，happiness 最早是“好运”，后来才是“幸福”<br/>kind → **kindness** 善良 |
+| | **-ity** | “……的性质或状态” | active → **activity** 活跃的状态 → 各种活动<br/>possible → **possibility** 可能性 |
+| | **-ance**、**-ence** | 从表示“正在……”的词尾 -ant、-ent 变来，表示状态、性质。所以 -ant 的词配 -ance，-ent 的词配 -ence | important → **importance** 重要性<br/>different → **difference** 差别 |
+| | **-ship** | 本义和 shape（形状，塑造）同一来源 → 状态、关系 | friend → **friendship** 朋友之间的关系，友谊 |
+| | **-dom** | 本来是一个独立的名词，意思是“判决、法令” → 管辖的范围 → 状态 | free → **freedom** 自由 |
+| | **-hood** | 本义“样子、品质” → 身份、状态 → 处于这种状态的时期 | child → **childhood** 当孩子的状态 → 童年 |
+| **形容词** | **-ful** | 本来就是 full（满的） → 充满……的 | help → **helpful** 充满帮助的，有帮助的<br/>care → **careful** 充满留心的，小心的 |
+| | **-less** | 本来是一个独立的词，意思是“脱离、没有” | care → **careless** 不留心的，粗心的<br/>home → **homeless** 没有家的，无家可归的 |
+| | **-able**、**-ible** | “能……的，能被……的，值得……的” | comfort → **comfortable**：comfort 本义是“使坚强” → 安慰；comfortable 最早是“给人安慰的”，18 世纪起才指身体上“舒服的”<br/>enjoy → **enjoyable** 能被享受的 → 令人愉快的<br/>-ible 是同一个后缀：**possible** 能做到的，可能的 |
+| | **-ous** | “有……的，充满……的” | danger → **dangerous**：danger 最早是“主人掌控别人、能伤害别人的力量”。落在别人的掌控之下，就有受伤害的可能，所以 danger 变成了“危险”，dangerous 就是“充满危险的”<br/>fame → **famous**：fame 本义是“人们的传说”，被很多人传说的就是有名的 |
+| | **-ious** | 就是 -ous，前面的 i 是词干自带的 | **delicious**：和 delight（高兴）同一个来源，让感官高兴的 → 美味的<br/>**serious**：本义“有分量的” → 严肃的<br/>**various**：和 vary（变化）同一个来源，本义“变化多样的” → 各种各样的 |
+| | **-al** | “属于……的，和……有关的” | nation → **national** 国家的<br/>nature → **natural** 自然的 |
+| | **-ive** | “倾向于……的，做……的” | act → **active** 爱做事的 → 积极的，活跃的<br/>attract → **attractive** 能把人拉过来的 → 有吸引力的 |
+| | **-y** | “充满……的，带着……的” | sun → **sunny** 充满阳光的，晴朗的<br/>health → **healthy** 健康的 |
+| | **-ly** | 本义“外形、样子” → 加在名词后，是“有……样子的” | friend → **friendly** 有朋友样子的，友好的<br/>love → **lovely** 可爱的 |
+| | **-ant**、**-ent** | 本来是“正在……的”词尾 → 有……性质的 | please → **pleasant** 正在让人高兴的 → 令人愉快的<br/>differ → **different**：differ 本义是“搬开、分开”，各自搬开就不一样了 → 不同的 |
+| | **-en**（形容词） | “用……做的” | wood → **wooden** 木头做的<br/>gold → **golden** 金子做的，金色的 |
+| **动词** | **-en**（动词） | 这是另一个 -en，把形容词变成动词：“使变得……” | wide → **widen** 使变宽，加宽 |
+| | **-ize**，英式也写 **-ise** | “做……这件事，使成为……” | real → **realize**：最早是“使变成真的”，所以有“实现”的意思；18 世纪起指“认清一件事的真实情况”，也就是“意识到”<br/>**organize**：organ 本义“工具、器官”，最早是“使有器官”，后来扩展到“把各部分安排好” → 组织 |
+| **副词** | **-ly** | 同一个 -ly，加在形容词后是“以……的样子” | quick → **quickly** 以快的样子，快地<br/>careful → **carefully** 小心地 |
+| | **-ward**、**-wards** | 本义“转向……的方向” | back → **backwards** 转向后面，向后。结尾的 -s 是英语给副词加的一个老词尾 |
+
+例句：
+
+- My brother is a big apple **eater**. 我弟弟特别能吃苹果。
+- We had an **enjoyable** day on the apple farm. 我们在苹果园度过了愉快的一天。
+- Apples are **healthy** and **delicious**. 苹果健康又美味。
+- She washed the apples **carefully**. 她仔细地洗了苹果。
+
+**两组容易混的后缀：**
+
+- **-er 其实是两个后缀。** 表示“做这件事的人”的 -er 和表示比较级的 -er 来源不同，只是长得一样。加在动词后是“人”：eater 吃东西的人。加在形容词后是比较级：sweet → sweeter 更甜的。
+- **-ly 是同一个后缀的两种用法。** 它的本义是“样子”。名词 + “样子”，说的是这个东西像什么样，是形容词：friendly 有朋友样子的。形容词 + “样子”，说的是动作以什么样子进行，是副词：quickly 以快的样子。因为 friendly 本身已经以 -ly 结尾，现代英语很少把它当副词用。详见第一部分“副词”下的“-ly 构词：形容词变副词”。
+
+**中考易错点：** 加后缀时常要改拼写。happy → happiness 的 y 变 i，英语在后缀前常把 y 写成 i；care → careful → carefully 结尾是两个 l，因为 -ful 自己有一个 l，-ly 又带来一个 l；decide → decision，词干从 d 换成了 s；important → importance、different → difference，-ant 对 -ance，-ent 对 -ence，因为 -ance、-ence 本来就是从 -ant、-ent 变来的，不要写串。
+
+本义依据：[etymonline: -er](https://www.etymonline.com/word/-er)、[-or](https://www.etymonline.com/word/-or)、[actor](https://www.etymonline.com/word/actor)、[visitor](https://www.etymonline.com/word/visitor)、[teacher](https://www.etymonline.com/word/teacher)、[-ist](https://www.etymonline.com/word/-ist)、[artist](https://www.etymonline.com/word/artist)、[scientist](https://www.etymonline.com/word/scientist)、[-ian](https://www.etymonline.com/word/-ian)、[-an](https://www.etymonline.com/word/-an)、[musician](https://www.etymonline.com/word/musician)、[-ant](https://www.etymonline.com/word/-ant)、[assistant](https://www.etymonline.com/word/assistant)、[-tion](https://www.etymonline.com/word/-tion)、[-ion](https://www.etymonline.com/word/-ion)、[action](https://www.etymonline.com/word/action)、[invention](https://www.etymonline.com/word/invention)、[decision](https://www.etymonline.com/word/decision)、[-ment](https://www.etymonline.com/word/-ment)、[movement](https://www.etymonline.com/word/movement)、[agreement](https://www.etymonline.com/word/agreement)、[-ness](https://www.etymonline.com/word/-ness)、[happiness](https://www.etymonline.com/word/happiness)、[kindness](https://www.etymonline.com/word/kindness)、[-ity](https://www.etymonline.com/word/-ity)、[activity](https://www.etymonline.com/word/activity)、[-ance](https://www.etymonline.com/word/-ance)、[-ence](https://www.etymonline.com/word/-ence)、[importance](https://www.etymonline.com/word/importance)、[difference](https://www.etymonline.com/word/difference)、[-ship](https://www.etymonline.com/word/-ship)、[friendship](https://www.etymonline.com/word/friendship)、[-dom](https://www.etymonline.com/word/-dom)、[freedom](https://www.etymonline.com/word/freedom)、[-hood](https://www.etymonline.com/word/-hood)、[childhood](https://www.etymonline.com/word/childhood)、[-ful](https://www.etymonline.com/word/-ful)、[helpful](https://www.etymonline.com/word/helpful)、[-less](https://www.etymonline.com/word/-less)、[homeless](https://www.etymonline.com/word/homeless)、[-able](https://www.etymonline.com/word/-able)、[-ible](https://www.etymonline.com/word/-ible)、[comfort](https://www.etymonline.com/word/comfort)、[comfortable](https://www.etymonline.com/word/comfortable)、[enjoyable](https://www.etymonline.com/word/enjoyable)、[possible](https://www.etymonline.com/word/possible)、[-ous](https://www.etymonline.com/word/-ous)、[danger](https://www.etymonline.com/word/danger)、[dangerous](https://www.etymonline.com/word/dangerous)、[fame](https://www.etymonline.com/word/fame)、[famous](https://www.etymonline.com/word/famous)、[delicious](https://www.etymonline.com/word/delicious)、[delight](https://www.etymonline.com/word/delight)、[serious](https://www.etymonline.com/word/serious)、[various](https://www.etymonline.com/word/various)、[-al](https://www.etymonline.com/word/-al)、[national](https://www.etymonline.com/word/national)、[natural](https://www.etymonline.com/word/natural)、[-ive](https://www.etymonline.com/word/-ive)、[active](https://www.etymonline.com/word/active)、[attractive](https://www.etymonline.com/word/attractive)、[-y](https://www.etymonline.com/word/-y)、[sunny](https://www.etymonline.com/word/sunny)、[healthy](https://www.etymonline.com/word/healthy)、[-ly](https://www.etymonline.com/word/-ly)、[friendly](https://www.etymonline.com/word/friendly)、[lovely](https://www.etymonline.com/word/lovely)、[quickly](https://www.etymonline.com/word/quickly)、[-ent](https://www.etymonline.com/word/-ent)、[pleasant](https://www.etymonline.com/word/pleasant)、[different](https://www.etymonline.com/word/different)、[-en](https://www.etymonline.com/word/-en)、[wooden](https://www.etymonline.com/word/wooden)、[golden](https://www.etymonline.com/word/golden)、[widen](https://www.etymonline.com/word/widen)、[-ize](https://www.etymonline.com/word/-ize)、[realize](https://www.etymonline.com/word/realize)、[organize](https://www.etymonline.com/word/organize)、[-ward](https://www.etymonline.com/word/-ward)、[backwards](https://www.etymonline.com/word/backwards)。用法依据：[剑桥英汉词典：eater](https://dictionary.cambridge.org/zhs/%E8%AF%8D%E5%85%B8/%E8%8B%B1%E8%AF%AD/eater)、[visitor](https://dictionary.cambridge.org/zhs/%E8%AF%8D%E5%85%B8/%E8%8B%B1%E8%AF%AD/visitor)、[enjoyable](https://dictionary.cambridge.org/zhs/%E8%AF%8D%E5%85%B8/%E8%8B%B1%E8%AF%AD/enjoyable)、[delicious](https://dictionary.cambridge.org/zhs/%E8%AF%8D%E5%85%B8/%E8%8B%B1%E8%AF%AD/delicious)、[friendly](https://dictionary.cambridge.org/zhs/%E8%AF%8D%E5%85%B8/%E8%8B%B1%E8%AF%AD/friendly)、[realize](https://dictionary.cambridge.org/zhs/%E8%AF%8D%E5%85%B8/%E8%8B%B1%E8%AF%AD/realize)、[careless](https://dictionary.cambridge.org/zhs/%E8%AF%8D%E5%85%B8/%E8%8B%B1%E8%AF%AD/careless)；[Oxford Learner's: eater](https://www.oxfordlearnersdictionaries.com/definition/english/eater_1)、[visitor](https://www.oxfordlearnersdictionaries.com/definition/english/visitor_1)、[assistant](https://www.oxfordlearnersdictionaries.com/definition/english/assistant_1)、[enjoyable](https://www.oxfordlearnersdictionaries.com/definition/english/enjoyable_1)、[delicious](https://www.oxfordlearnersdictionaries.com/definition/english/delicious_1)、[healthy](https://www.oxfordlearnersdictionaries.com/definition/english/healthy_1)、[friendly](https://www.oxfordlearnersdictionaries.com/definition/english/friendly_1)、[lovely](https://www.oxfordlearnersdictionaries.com/definition/english/lovely_1)、[wooden](https://www.oxfordlearnersdictionaries.com/definition/english/wooden_1)、[golden](https://www.oxfordlearnersdictionaries.com/definition/english/golden_1)、[widen](https://www.oxfordlearnersdictionaries.com/definition/english/widen_1)、[realize](https://www.oxfordlearnersdictionaries.com/definition/english/realize_1)、[backwards](https://www.oxfordlearnersdictionaries.com/definition/english/backwards_1)。

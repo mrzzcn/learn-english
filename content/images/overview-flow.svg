@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 170" width="640" height="170" font-family="Noto Sans SC, PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="640" height="170" rx="10" fill="#fffdf7"/>
+  <g fill="none" stroke="#555" stroke-width="1.6" marker-end="url(#arrow)">
+    <path d="M150 55 H192"/>
+    <path d="M340 55 H482"/>
+    <path d="M300 78 V112 H352"/>
+    <path d="M500 125 H536 V84"/>
+  </g>
+  <g stroke="#333" stroke-width="1.6">
+    <rect x="30" y="28" width="120" height="54" rx="8" fill="#fdecea"/>
+    <rect x="195" y="28" width="145" height="54" rx="8" fill="#fff"/>
+    <rect x="355" y="98" width="145" height="54" rx="8" fill="#fff"/>
+    <rect x="485" y="28" width="130" height="54" rx="8" fill="#fff"/>
+  </g>
+  <g text-anchor="middle" fill="#1f2328">
+    <text x="90" y="51" font-size="16" font-weight="bold">词性</text>
+    <text x="90" y="71" font-size="12" fill="#57606a">每个词的身份</text>
+    <text x="267" y="51" font-size="16" font-weight="bold">简单句</text>
+    <text x="267" y="71" font-size="12" fill="#57606a">主谓宾等成分</text>
+    <text x="427" y="121" font-size="16" font-weight="bold">复合句</text>
+    <text x="427" y="141" font-size="12" fill="#57606a">句子套句子</text>
+    <text x="550" y="51" font-size="16" font-weight="bold">时态</text>
+    <text x="550" y="71" font-size="12" fill="#57606a">谓语动词的变化</text>
+  </g>
+</svg>
