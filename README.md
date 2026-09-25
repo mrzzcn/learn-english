@@ -1,6 +1,6 @@
 # 初三英语学习导览
 
-面向河南中考的初三英语学习资料：十大词性、词源法记单词、简单句、复合句、时态，附河南中考真题。内容以 Markdown 编写，编译成 GitBook 风格的静态网站，发布在 Cloudflare Pages。
+面向河南中考的初三英语学习资料：十大词性、词源法记单词、简单句、复合句、时态，附河南中考真题。内容以 Markdown 编写，编译成 GitBook 风格的静态网站，发布在 Cloudflare。
 
 ## 目录结构
 
@@ -60,17 +60,20 @@ python3 -m http.server 8788 --directory dist
 - **网页下载页：** `content/download.md` 是网站最后一页“PDF 下载”，只在网页上出现，不排进 PDF。构建时，PDF 复制到 `dist/downloads/guide.pdf`，页面里的页数、大小、日期自动填好。
 - **两遍排版：** 为了让页眉和交叉引用的页码准确，脚本先排一遍拿到各节标题的页码，再正式输出。如果第二遍页码有变化，会打印警告。
 
-## 发布到 Cloudflare Pages
+## 发布到 Cloudflare
 
-**方式一：连接 Git 仓库（推荐）。** 把仓库推到 GitHub 或 GitLab，在 Cloudflare 控制台依次进入 Workers & Pages → Create → Pages → Connect to Git，选择仓库，并填写：
+项目以 Cloudflare Workers 静态资源的方式部署，配置在 `wrangler.jsonc`：上传 `dist/`，找不到的页面返回 `404.html`。
+
+**方式一：连接 Git 仓库（推荐）。** 在 Cloudflare 控制台依次进入 Workers & Pages → Create，导入 GitHub 仓库，并填写：
 
 | 设置 | 值 |
 | --- | --- |
-| Framework preset | None |
 | Build command | `pnpm build` |
-| Build output directory | `dist` |
+| Deploy command | `npx wrangler deploy` |
 
-Cloudflare 构建时也会先生成 PDF，第一次构建要多花一点时间下载字体。Node 版本由 `.node-version` 指定，Cloudflare 看到 `pnpm-lock.yaml` 会自动用 pnpm 安装依赖。如果构建日志里 pnpm 版本不对，在项目的环境变量里加 `PNPM_VERSION = 11.1.2`。之后每次推送都会自动构建和发布。
+Cloudflare 按 `.node-version` 和 `package.json` 的 `packageManager` 选择 Node 和 pnpm 版本。构建时会先生成 PDF，第一次构建要多花一点时间下载字体。之后每次推送到 `main` 都会自动构建和发布。
+
+仓库里必须有 `wrangler.jsonc`。没有它，wrangler 会尝试把自己装成项目依赖，而 pnpm 11 默认拦截 esbuild、workerd 的安装脚本，部署就会失败（`ERR_PNPM_IGNORED_BUILDS`）。
 
 **方式二：本地直接上传。**
 
@@ -79,10 +82,10 @@ pnpm build
 ```
 
 ```bash
-pnpm dlx wrangler pages deploy dist --project-name learn-english
+pnpm dlx wrangler deploy
 ```
 
-第一次运行时会要求登录 Cloudflare 账号并创建项目。
+第一次运行时会要求登录 Cloudflare 账号。
 
 ## 发布 PDF 到 GitHub Release
 
