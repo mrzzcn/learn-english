@@ -1,0 +1,93 @@
+# 初三英语学习导览
+
+面向河南中考的初三英语学习资料：十大词性、词源法记单词、简单句、复合句、时态，附河南中考真题。内容以 Markdown 编写，编译成 GitBook 风格的静态网站，发布在 Cloudflare Pages。
+
+## 目录结构
+
+| 路径 | 内容 |
+| --- | --- |
+| `content/` | 网站内容，每页一个 Markdown 文件 |
+| `content/SUMMARY.md` | 侧栏目录和页面顺序 |
+| `content/images/` | 简笔画和二维码 |
+| `tools/build.mjs` | 网站构建脚本 |
+| `tools/pdf.mjs`、`tools/fonts.mjs` | PDF 生成脚本、PDF 字体下载 |
+| `tools/site/` | 网页样式、脚本和图标 |
+| `tools/zh_typeset.py` | 中文排版检查 |
+| `notes/` | 编写资料（大纲、写作规范、审查报告），不发布 |
+| `dist/`、`output/` | 网站和 PDF 的构建产物，不提交 |
+
+## 本地使用
+
+```bash
+pnpm install
+```
+
+```bash
+pnpm build
+```
+
+`pnpm build` 先生成 PDF，再构建网站，并把 PDF 放进网站的下载页。只改了网页样式、想快点看效果时，用 `pnpm build:site` 只构建网站。
+
+```bash
+python3 -m http.server 8788 --directory dist
+```
+
+然后打开 http://localhost:8788 预览。
+
+其他命令：
+
+- `pnpm pdf`：生成 A4 纵向 PDF，输出到 `output/初三英语学习导览.pdf`。
+- `pnpm pdf:sample`：只生成介词几节的样张，用来快速看版式。也可以用 `node tools/pdf.mjs --only <路径前缀>` 生成任意几节。
+- `pnpm merge`：按目录顺序把全部页面合并成一个 `guide.md`。
+- `python3 tools/zh_typeset.py content/**/*.md`：检查中文排版，加 `--write` 直接修改。
+
+## 写内容
+
+- 新增页面：在 `content/` 下建 Markdown 文件，以一个 `#` 标题开头，再把它加进 `SUMMARY.md`。
+- 图片放在 `content/images/`，页面里用相对路径引用，比如 `../images/prep-on.svg`。
+- 交叉引用写成“见第一部分‘介词’”或“第四部分：宾语从句”，构建时会自动变成链接。没解析到的引用会在构建输出的 warnings 里列出。
+- 加粗照常写 `**…**`。构建时，句子中间的加粗自动显示为珊瑚色；整段加粗、以冒号结尾的标签、自成一句的主题句、表头行和表格第一列里的加粗保持黑色（第一列只有开头的关键词不上色）。规则在 `tools/build.mjs` 的 `markInlineEmphasis`。
+- 写作规范见 `notes/writing-plan.md`。
+
+## PDF
+
+- **生成方式：** `tools/pdf.mjs` 用 pdfmake 生成 PDF。它和网站共用 `tools/build.mjs` 的交叉引用和句中加粗上色规则，所以两边的强调色、链接一致。
+- **版式：** 页边距左 18 mm（留装订余量）、上 15 mm、右 12 mm、下 12 mm。封面、带页码的目录；每个部分从新的一页开始；页眉左边是部分名、右边是本节标题；页脚是页码。
+  - 表格跨页时重复表头，一行不会拆到两页。
+  - 标题下方空间不够时，标题会连同后面的内容一起移到下一页。
+- **交叉引用：** 变成 PDF 内部链接，后面加“（第 N 页）”。
+- **字体：** Noto Sans SC（思源黑体，SIL OFL 开源授权）的 Regular 和 Bold 静态 TTF。首次运行时，`tools/fonts.mjs` 通过 jsDelivr 下载到 `tools/fonts/`，约 20 MB，不提交到仓库。
+- **网页下载页：** `content/download.md` 是网站最后一页“PDF 下载”，只在网页上出现，不排进 PDF。构建时，PDF 复制到 `dist/downloads/guide.pdf`，页面里的页数、大小、日期自动填好。
+- **两遍排版：** 为了让页眉和交叉引用的页码准确，脚本先排一遍拿到各节标题的页码，再正式输出。如果第二遍页码有变化，会打印警告。
+
+## 发布到 Cloudflare Pages
+
+**方式一：连接 Git 仓库（推荐）。** 把仓库推到 GitHub 或 GitLab，在 Cloudflare 控制台依次进入 Workers & Pages → Create → Pages → Connect to Git，选择仓库，并填写：
+
+| 设置 | 值 |
+| --- | --- |
+| Framework preset | None |
+| Build command | `pnpm build` |
+| Build output directory | `dist` |
+
+Cloudflare 构建时也会先生成 PDF，第一次构建要多花一点时间下载字体。Node 版本由 `.node-version` 指定，Cloudflare 看到 `pnpm-lock.yaml` 会自动用 pnpm 安装依赖。如果构建日志里 pnpm 版本不对，在项目的环境变量里加 `PNPM_VERSION = 11.1.2`。之后每次推送都会自动构建和发布。
+
+**方式二：本地直接上传。**
+
+```bash
+pnpm build
+```
+
+```bash
+pnpm dlx wrangler pages deploy dist --project-name learn-english
+```
+
+第一次运行时会要求登录 Cloudflare 账号并创建项目。
+
+## 网站功能
+
+- 左侧目录按部分分组，可以折叠；中间是正文；右侧是本页小标题导航。
+- 每页底部有上一页和下一页。
+- 全文搜索在浏览器本地完成，按 `/` 聚焦搜索框。
+- 在手机上，目录收进左上角的菜单。
+- 只提供浅色主题。

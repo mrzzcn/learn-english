@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node tools/build.mjs",
+    "build": "node tools/pdf.mjs && node tools/build.mjs",
+    "build:site": "node tools/build.mjs",
     "pdf": "node tools/pdf.mjs",
     "pdf:sample": "node tools/pdf.mjs --only 1-pos/preposition",
     "merge": "node tools/build.mjs --merge guide.md",
