@@ -1,0 +1,16 @@
+{
+  "name": "learn-english",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "pdf": "node tools/pdf.mjs",
+    "pdf:sample": "node tools/pdf.mjs --only 1-pos/preposition"
+  },
+  "dependencies": {
+    "markdown-it": "^14.1.0"
+  },
+  "packageManager": "pnpm@11.1.2",
+  "devDependencies": {
+    "pdfmake": "0.3.11"
+  }
+}
