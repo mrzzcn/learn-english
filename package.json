@@ -6,7 +6,7 @@
     "build": "node tools/pdf.mjs && node tools/build.mjs",
     "build:site": "node tools/build.mjs",
     "pdf": "node tools/pdf.mjs",
-    "pdf:sample": "node tools/pdf.mjs --only 1-pos/preposition",
+    "pdf:sample": "node tools/pdf.mjs --sample",
     "merge": "node tools/build.mjs --merge guide.md",
     "preview": "node tools/build.mjs && pnpm dlx serve dist -l 8788"
   },

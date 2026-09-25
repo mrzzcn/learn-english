@@ -6,16 +6,17 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import MarkdownIt from 'markdown-it';
+import config from '../site.config.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CONTENT = path.join(ROOT, 'content');
 const DIST = path.join(ROOT, 'dist');
 const ASSETS = path.join(ROOT, 'tools', 'site');
-const SITE_TITLE = '初三英语学习导览';
+const SITE_TITLE = config.title;
 const PDF_FILE = path.join(ROOT, 'output', `${SITE_TITLE}.pdf`);   // tools/pdf.mjs 的输出
 const PDF_URL = '/downloads/guide.pdf';
 // 只在网页上出现、不排进 PDF 的页面
-const WEB_ONLY = new Set(['download.md']);
+const WEB_ONLY = new Set(config.webOnly || []);
 
 // ---------- 目录 ----------
 
@@ -56,14 +57,15 @@ function slugify(text, used) {
   return id;
 }
 
-const PART_NO = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5 };
+const PART_NO = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10 };
+const PART_RE = '[一二三四五六七八九十]';   // “第X部分”里的 X
 
 // ---------- 读页面、收集标题 ----------
 
 function loadPages(groups) {
   const pages = [];
   groups.forEach((g, gi) => {
-    const part = (g.title && g.title.match(/第([一二三四五])部分/)) ? PART_NO[g.title.match(/第([一二三四五])部分/)[1]] : null;
+    const part = (g.title && g.title.match(new RegExp(`第(${PART_RE})部分`))) ? PART_NO[g.title.match(new RegExp(`第(${PART_RE})部分`))[1]] : null;
     g.pages.forEach((p, pi) => {
       const src = fs.readFileSync(path.join(CONTENT, p.file), 'utf8');
       const used = new Set();
@@ -119,7 +121,7 @@ function makeXref(pages) {
       if (line.startsWith('```')) { fence = !fence; return line; }
       if (fence || /^#{1,6}\s/.test(line)) return line;
       // 引号形式：第一部分“介词”
-      line = line.replace(/(?<!\[)第([一二三四五])部分(“([^”]+)”)/g, (all, n, q, name) => {
+      line = line.replace(new RegExp(`(?<!\\[)第(${PART_RE})部分(“([^”]+)”)`, 'g'), (all, n, q, name) => {
         const h = target(PART_NO[n], name);
         if (!h) {
           const idx = pages.find(p => p.part === PART_NO[n] && p.first);
@@ -128,7 +130,7 @@ function makeXref(pages) {
         return `[${all}](${href(h)})`;
       });
       // 冒号形式（答案表里）：第一部分：不定代词：each 与 every
-      line = line.replace(/(?<!\[)第([一二三四五])部分：([^|；。（]+?)(?=\s*(\||；|。|（|<br\/>|$))/g, (all, n, name) => {
+      line = line.replace(new RegExp(`(?<!\\[)第(${PART_RE})部分：([^|；。（]+?)(?=\\s*(\\||；|。|（|<br\\/>|$))`, 'g'), (all, n, name) => {
         const h = target(PART_NO[n], name);
         if (!h) {
           const idx = pages.find(p => p.part === PART_NO[n] && p.first);
@@ -301,7 +303,7 @@ function layout({ page, body, groups, prev, next, pages }) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
 <title>${esc(title)}</title>
-<meta name="description" content="面向河南中考的初三英语学习导览：词性、词源法记单词、简单句、复合句、时态，附河南中考真题。">
+<meta name="description" content="${esc(config.description)}">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/style.css">
 </head>
@@ -439,7 +441,7 @@ function makeXrefProbe(pages) {
       if (l.startsWith('```')) { fence = !fence; return false; }
       return !fence && !/^#{1,6}\s/.test(l);
     }).join('\n');
-    for (const m of res.matchAll(/(?<!\[)第[一二三四五]部分(“[^”]+”|：[^|；。（\n]+)/g)) {
+    for (const m of res.matchAll(new RegExp(`(?<!\\[)第${PART_RE}部分(“[^”]+”|：[^|；。（\\n]+)`, 'g'))) {
       // 已被转成链接的会带 [ 前缀，这里剩下的就是没解析的
       out.push(`${p.file}: 交叉引用未解析 ${m[0].slice(0, 40)}`);
     }
@@ -456,7 +458,7 @@ function merge(outFile) {
 }
 
 // 供 tools/pdf.mjs 复用
-export { ROOT, CONTENT, SITE_TITLE, WEB_ONLY, readSummary, loadPages, makeXref, markInlineEmphasis, urlOf };
+export { ROOT, CONTENT, SITE_TITLE, WEB_ONLY, config, readSummary, loadPages, makeXref, markInlineEmphasis, urlOf };
 
 // 直接运行时才构建；被 import 时不执行
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

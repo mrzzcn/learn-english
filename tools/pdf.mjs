@@ -1,21 +1,22 @@
 // 把 content/ 生成 A4 纵向 PDF（pdfmake）。
 // 用法：
-//   node tools/pdf.mjs                          全书 → output/初三英语学习导览.pdf
-//   node tools/pdf.mjs --only 1-pos/preposition 只排文件名以此开头的页面（出样张）
+//   node tools/pdf.mjs                          全书 → output/<书名>.pdf（书名见 site.config.mjs）
+//   node tools/pdf.mjs --sample                 只排 site.config.mjs 里 sample 指定的页面（出样张）
+//   node tools/pdf.mjs --only 1-pos/preposition 只排文件名以此开头的页面
 //   node tools/pdf.mjs --out 文件名.pdf          指定输出文件
 // 渲染规则和网站一致：交叉引用、句中加粗上色都复用 tools/build.mjs。
 import fs from 'node:fs';
 import path from 'node:path';
 import MarkdownIt from 'markdown-it';
 import pdfmake from 'pdfmake';
-import { ROOT, CONTENT, SITE_TITLE, WEB_ONLY, readSummary, loadPages, makeXref, markInlineEmphasis } from './build.mjs';
+import { ROOT, CONTENT, SITE_TITLE, WEB_ONLY, config, readSummary, loadPages, makeXref, markInlineEmphasis } from './build.mjs';
 import { ensureFonts } from './fonts.mjs';
 
 // ---------- 参数 ----------
 
 const args = process.argv.slice(2);
 const opt = k => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : null; };
-const ONLY = opt('--only');
+const ONLY = opt('--only') || (args.includes('--sample') ? config.sample : null);
 const OUT = path.resolve(ROOT, opt('--out') || path.join('output', ONLY ? `样张-${ONLY.replace(/\W+/g, '-')}.pdf` : `${SITE_TITLE}.pdf`));
 
 // ---------- 版式常量（单位 pt，1 mm ≈ 2.835 pt） ----------
@@ -33,6 +34,9 @@ const C = {
 // ---------- 字体 ----------
 
 const FONT = 'Noto Sans SC';
+
+// 依据行、出处行：以这些词开头的段落排成灰色小字
+const CITE_RE = new RegExp(`^(${(config.citePrefixes || []).map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') || '(?!)'})`);
 
 // ---------- 小工具 ----------
 
@@ -134,7 +138,7 @@ function tokensToContent(tokens, ctx) {
         const txt = runs.map(runText).join('').trim();
         if (txt) {
           const p = { text: runs, style: 'p' };
-          if (/^(本义依据|用法依据|依据|完成时的来源依据|年份读法依据|出处|答案来源)/.test(txt)) p.style = 'cite';
+          if (CITE_RE.test(txt)) p.style = 'cite';
           if (t.hidden) p.margin = [0, 0, 0, 2];   // 紧凑列表里的段落
           nodes.push(p);
         }
@@ -289,8 +293,8 @@ async function main() {
   // 封面
   content.push(
     { text: SITE_TITLE, style: 'coverTitle', margin: [0, 230, 0, 12] },
-    { text: '词性 · 词源法记单词 · 简单句 · 复合句 · 时态', style: 'coverSub' },
-    { text: ONLY ? `样张：${pages.map(p => p.label).join('、')}` : '面向河南中考的初三学生', style: 'coverSub', margin: [0, 6, 0, 0] },
+    { text: config.subtitle, style: 'coverSub' },
+    { text: ONLY ? `样张：${pages.map(p => p.label).join('、')}` : config.audience, style: 'coverSub', margin: [0, 6, 0, 0] },
     { text: `生成日期：${new Date().toISOString().slice(0, 10)}`, style: 'coverDate', absolutePosition: { x: MARGIN[0], y: PAGE.height - 110 } },
     { text: '', pageBreak: 'after' },
   );
@@ -392,7 +396,7 @@ async function main() {
     pageSize: 'A4',
     pageOrientation: 'portrait',
     pageMargins: MARGIN,
-    info: { title: SITE_TITLE, author: SITE_TITLE, subject: '面向河南中考的初三英语学习导览' },
+    info: { title: SITE_TITLE, author: SITE_TITLE, subject: config.description },
     defaultStyle: { font: FONT, fontSize: 10.5, lineHeight: 1.22, color: C.text },
     styles: {
       coverTitle: { fontSize: 30, bold: true, alignment: 'center' },

@@ -6,6 +6,7 @@
 
 | 路径 | 内容 |
 | --- | --- |
+| `site.config.mjs` | 书名、副标题、面向对象、英文短名、样张范围等配置，脚本和发布工作流都从这里读 |
 | `content/` | 网站内容，每页一个 Markdown 文件 |
 | `content/SUMMARY.md` | 侧栏目录和页面顺序 |
 | `content/images/` | 简笔画和二维码 |
@@ -37,7 +38,7 @@ python3 -m http.server 8788 --directory dist
 其他命令：
 
 - `pnpm pdf`：生成 A4 纵向 PDF，输出到 `output/初三英语学习导览.pdf`。
-- `pnpm pdf:sample`：只生成介词几节的样张，用来快速看版式。也可以用 `node tools/pdf.mjs --only <路径前缀>` 生成任意几节。
+- `pnpm pdf:sample`：只生成样张，范围由 `site.config.mjs` 的 `sample` 指定（现在是介词几节），用来快速看版式。也可以用 `node tools/pdf.mjs --only <路径前缀>` 生成任意几节。
 - `pnpm merge`：按目录顺序把全部页面合并成一个 `guide.md`。
 - `python3 tools/zh_typeset.py content/**/*.md`：检查中文排版，加 `--write` 直接修改。
 
