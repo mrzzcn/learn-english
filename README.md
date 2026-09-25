@@ -84,6 +84,20 @@ pnpm dlx wrangler pages deploy dist --project-name learn-english
 
 第一次运行时会要求登录 Cloudflare 账号并创建项目。
 
+## 发布 PDF 到 GitHub Release
+
+推送版本标签后，GitHub Actions（`.github/workflows/release.yml`）会生成 PDF，建一个 Release，并把 PDF 作为附件上传，附件名为 `learn-english-guide-<标签>.pdf`。
+
+```bash
+git tag v1.0.0
+```
+
+```bash
+git push origin v1.0.0
+```
+
+给已有标签补传 PDF：在仓库的 Actions 页面选择 “Release PDF”，点 Run workflow，填入标签名。
+
 ## 网站功能
 
 - 左侧目录按部分分组，可以折叠；中间是正文；右侧是本页小标题导航。
