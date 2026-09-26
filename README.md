@@ -48,6 +48,7 @@ python3 -m http.server 8788 --directory dist
 - 图片放在 `content/images/`，页面里用相对路径引用，比如 `../images/prep-on.svg`。
 - 交叉引用写成“见第一部分‘介词’”或“第四部分：宾语从句”，构建时会自动变成链接。没解析到的引用会在构建输出的 warnings 里列出。
 - 加粗照常写 `**…**`。构建时，句子中间的加粗自动显示为珊瑚色；整段加粗、以冒号结尾的标签、自成一句的主题句、表头行和表格第一列里的加粗保持黑色（第一列只有开头的关键词不上色）。规则在 `tools/build.mjs` 的 `markInlineEmphasis`。
+- 标题以“答案”开头的小节（如真题的 `## 答案`），网页上默认折叠，读者点 Show Answer 才展开；PDF 里照常显示。答案小节不进搜索索引，免得搜索结果露出答案。要折叠哪些标题，在 `site.config.mjs` 的 `answerHeadings` 里设置。
 - 写作规范见 `notes/writing-plan.md`。
 
 ## PDF

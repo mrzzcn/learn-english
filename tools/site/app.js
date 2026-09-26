@@ -35,6 +35,21 @@
     heads.forEach(h => io.observe(h));
   }
 
+  // ---------- 答案折叠 ----------
+  // 展开后按钮文字换成 Hide Answer；链接指向折叠区里的锚点时自动展开
+  document.querySelectorAll('details.answer').forEach(d => {
+    const s = d.querySelector('summary');
+    d.addEventListener('toggle', () => { s.textContent = d.open ? 'Hide Answer' : 'Show Answer'; });
+  });
+  const openTarget = () => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const el = id && document.getElementById(id);
+    const d = el && el.closest('details.answer');
+    if (d && !d.open) { d.open = true; el.scrollIntoView(); }
+  };
+  openTarget();
+  window.addEventListener('hashchange', openTarget);
+
   // ---------- 全文搜索 ----------
   const input = document.getElementById('q');
   const box = document.getElementById('results');

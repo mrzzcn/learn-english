@@ -15,6 +15,8 @@ export default {
   sample: '1-pos/preposition',
   // 以这些词开头的段落在 PDF 里排成灰色小字（节末的依据行、出处行）
   citePrefixes: ['本义依据', '用法依据', '依据', '完成时的来源依据', '年份读法依据', '出处', '答案来源'],
+  // 网页上默认折叠的小节：标题以这些词开头的小节（如真题的“答案”）先隐藏，点 Show Answer 才展开；PDF 照常显示
+  answerHeadings: ['答案'],
   // 只在网页上出现、不排进 PDF 的页面（相对 content/ 的路径）
   webOnly: ['download.md'],
 };

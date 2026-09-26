@@ -349,6 +349,27 @@ function searchEntries(page, html) {
   return out;
 }
 
+// ---------- 答案折叠 ----------
+// 标题以 config.answerHeadings 里的词开头的小节（如“## 答案”），标题保留，
+// 标题下面到同级或更高一级标题之前的内容收进 <details>，默认收起，按钮文字是 Show Answer。
+const headingText = h => h.replace(/<a class="anchor"[^>]*>#<\/a>/g, '').replace(/<[^>]+>/g, '').trim();
+const isAnswerHeading = text => (config.answerHeadings || []).some(w => text.startsWith(w));
+
+function foldAnswers(html) {
+  const re = /<h([1-6])[^>]*>([\s\S]*?)<\/h\1>/g;
+  const heads = [...html.matchAll(re)].map(m => ({ level: +m[1], start: m.index, end: m.index + m[0].length, text: headingText(m[2]) }));
+  let out = '', pos = 0;
+  heads.forEach((h, k) => {
+    if (!isAnswerHeading(h.text)) return;
+    const next = heads.slice(k + 1).find(n => n.level <= h.level);
+    const stop = next ? next.start : html.length;
+    out += html.slice(pos, h.end)
+      + `\n<details class="answer"><summary>Show Answer</summary>\n${html.slice(h.end, stop)}</details>\n`;
+    pos = stop;
+  });
+  return out + html.slice(pos);
+}
+
 // ---------- PDF 下载 ----------
 
 // 把 output/ 里的 PDF 复制到 dist/downloads/，返回大小、页数、生成日期；没有 PDF 时返回 null
@@ -410,10 +431,12 @@ function build() {
     const src = xref(fillPdfInfo(page.src, pdf), page);
     const md = makeRenderer(page, pagesByFile);
     let body = md.render(src).replace(/src="\/(\.\.\/)*images\//g, 'src="/images/');
+    // 搜索索引不收答案小节，免得搜索结果直接露出答案
+    index.push(...searchEntries(page, body).filter(e => !isAnswerHeading(e.h)));
+    body = foldAnswers(body);
     const html = layout({ page, body, groups, prev: pages[i - 1], next: pages[i + 1], pages });
     fs.mkdirSync(path.dirname(outOf(page.url)), { recursive: true });
     fs.writeFileSync(outOf(page.url), html);
-    index.push(...searchEntries(page, body));
     // 检查：图片是否存在
     for (const m of body.matchAll(/<img[^>]+src="\/images\/([^"]+)"/g)) {
       if (!fs.existsSync(path.join(CONTENT, 'images', decodeURIComponent(m[1])))) unresolved.push(`${page.file}: 缺图片 ${m[1]}`);
