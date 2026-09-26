@@ -70,6 +70,8 @@
 ## 附录
 
 - [学习建议](appendix/index.md)
+- [2026 年真题](appendix/2026.md)
+- [2025 年真题](appendix/2025.md)
 - [2024 年真题](appendix/2024.md)
 - [2023 年真题](appendix/2023.md)
 - [2022 年真题](appendix/2022.md)
