@@ -15,6 +15,10 @@ export default {
   coverColors: { background: '#021a3c', title: '#fffdf7', subtitle: '#f3d27a', footer: '#c9d3e6' },
   // 网站正式地址（不带结尾斜杠），用于生成 sitemap.xml 和 robots.txt；留空则不生成
   siteUrl: 'https://learn-english.gamelife.pro',
+  // 版权人：网页底部和 PDF 末尾的版权提示
+  author: 'Jack',
+  // 源码仓库：网页底部和 PDF 末尾的链接
+  repo: 'https://github.com/mrzzcn/learn-english',
   // 英文短名：Release 附件名 <slug>-guide-<标签>.pdf
   slug: 'learn-english',
   // pnpm pdf:sample 默认只排文件路径以此开头的页面

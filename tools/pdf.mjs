@@ -9,7 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import MarkdownIt from 'markdown-it';
 import pdfmake from 'pdfmake';
-import { ROOT, CONTENT, SITE_TITLE, WEB_ONLY, config, readSummary, loadPages, makeXref, markInlineEmphasis } from './build.mjs';
+import { ROOT, CONTENT, SITE_TITLE, WEB_ONLY, config, COPYRIGHT, readSummary, loadPages, makeXref, markInlineEmphasis } from './build.mjs';
 import { ensureFonts } from './fonts.mjs';
 
 // ---------- 参数 ----------
@@ -409,6 +409,16 @@ async function main() {
       keepSpace.set(n.id, hasImage ? 150 : 80);
     });
     content.push(...nodes);
+  });
+
+  // 末尾：版权提示和源码链接（和网页底部一致）
+  if (config.author) content.push({
+    stack: [
+      { canvas: [{ type: 'line', x1: 0, y1: 0, x2: CONTENT_W, y2: 0, lineWidth: 0.5, lineColor: C.line }], margin: [0, 0, 0, 6] },
+      { text: COPYRIGHT, fontSize: 8.5, color: C.soft },
+      ...(config.repo ? [{ text: [{ text: '版权说明和源码：' }, { text: config.repo, link: config.repo, color: C.link }], fontSize: 8.5, color: C.soft, margin: [0, 2, 0, 0] }] : []),
+    ],
+    margin: [0, 24, 0, 0], unbreakable: true,
   });
 
   // ---------- 文档定义 ----------
