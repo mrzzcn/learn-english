@@ -35,6 +35,10 @@ const C = {
 
 const FONT = 'Noto Sans SC';
 
+// 封面插图：按页宽缩放、顶部对齐，下方多出的部分裁掉
+const COVER = config.cover ? path.resolve(ROOT, config.cover) : null;
+const CC = { background: '#021a3c', title: '#fffdf7', subtitle: '#f3d27a', footer: '#c9d3e6', ...(config.coverColors || {}) };
+
 // 依据行、出处行：以这些词开头的段落排成灰色小字
 const CITE_RE = new RegExp(`^(${(config.citePrefixes || []).map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') || '(?!)'})`);
 
@@ -291,13 +295,31 @@ async function main() {
   const content = [];
 
   // 封面
-  content.push(
-    { text: SITE_TITLE, style: 'coverTitle', margin: [0, 230, 0, 12] },
-    { text: config.subtitle, style: 'coverSub' },
-    { text: ONLY ? `样张：${pages.map(p => p.label).join('、')}` : config.audience, style: 'coverSub', margin: [0, 6, 0, 0] },
-    { text: `生成日期：${new Date().toISOString().slice(0, 10)}`, style: 'coverDate', absolutePosition: { x: MARGIN[0], y: PAGE.height - 110 } },
-    { text: '', pageBreak: 'after' },
-  );
+  const today = new Date().toISOString().slice(0, 10);
+  let coverLayer = [];
+  const audienceLine = ONLY ? `样张：${pages.map(p => p.label).join('、')}` : config.audience;
+  if (COVER) {
+    // 插图封面：图片由 background 铺满第一页；文字按整页宽度居中，叠在顶部夜空和底部
+    // 文字和图片一起放在 background 里画：贴近页底的绝对定位放在正文里会被挤到下一页
+    const centered = (text, y, style) => ({ columns: [{ width: PAGE.width, text, style, alignment: 'center' }], absolutePosition: { x: 0, y } });
+    coverLayer = [
+      // 底部文字下垫一条半透明夜色，压住被子上的花纹
+      { canvas: [{ type: 'rect', x: 0, y: 0, w: PAGE.width, h: 62, color: CC.background, fillOpacity: 0.72 }], absolutePosition: { x: 0, y: PAGE.height - 62 } },
+      centered(SITE_TITLE, 26, 'coverImgTitle'),
+      centered(config.subtitle, 70, 'coverImgSub'),
+      centered(audienceLine, PAGE.height - 46, 'coverImgFoot'),
+      centered(`生成日期：${today}`, PAGE.height - 28, 'coverImgFoot'),
+    ];
+    content.push({ text: ' ', pageBreak: 'after' });
+  } else {
+    content.push(
+      { text: SITE_TITLE, style: 'coverTitle', margin: [0, 230, 0, 12] },
+      { text: config.subtitle, style: 'coverSub' },
+      { text: audienceLine, style: 'coverSub', margin: [0, 6, 0, 0] },
+      { text: `生成日期：${today}`, style: 'coverDate', absolutePosition: { x: MARGIN[0], y: PAGE.height - 110 } },
+      { text: '', pageBreak: 'after' },
+    );
+  }
 
   // 目录：手工表格，页码用 pageReference 自动回填，每行下面一条点线
   const tocRows = [];
@@ -402,6 +424,9 @@ async function main() {
       coverTitle: { fontSize: 30, bold: true, alignment: 'center' },
       coverSub: { fontSize: 13, color: C.soft, alignment: 'center' },
       coverDate: { fontSize: 10, color: C.soft, alignment: 'center' },
+      coverImgTitle: { fontSize: 30, bold: true, color: CC.title, characterSpacing: 2 },
+      coverImgSub: { fontSize: 12, color: CC.subtitle, characterSpacing: 1 },
+      coverImgFoot: { fontSize: 10, color: CC.footer },
       tocTitle: { fontSize: 20, bold: true, margin: [0, 0, 0, 14] },
       partTitle: { fontSize: 22, bold: true, margin: [0, 0, 0, 14] },
       h1: { fontSize: 16.5, bold: true, margin: [0, 18, 0, 8] },
@@ -438,6 +463,14 @@ async function main() {
         ],
         fontSize: 8.5, color: C.soft, margin: [MARGIN[0], 7 * MM, MARGIN[2], 0],
       };
+    },
+    background(currentPage) {
+      if (currentPage !== 1 || !COVER) return null;
+      return [
+        { canvas: [{ type: 'rect', x: 0, y: 0, w: PAGE.width, h: PAGE.height, color: CC.background }], absolutePosition: { x: 0, y: 0 } },
+        { image: COVER, width: PAGE.width, absolutePosition: { x: 0, y: 0 } },
+        ...coverLayer,
+      ];
     },
     footer(currentPage) {
       if (currentPage === 1) return null;

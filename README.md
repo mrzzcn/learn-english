@@ -1,6 +1,6 @@
-# 初三英语学习导览
+# 初中英语学习导览
 
-面向河南中考的初三英语学习资料：十大词性、词源法记单词、简单句、复合句、时态，附河南中考真题。内容以 Markdown 编写，编译成 GitBook 风格的静态网站，发布在 Cloudflare。
+面向初中生的英语学习资料：十大词性、词源法记单词、简单句、复合句、时态，附河南中考真题。内容以 Markdown 编写，编译成 GitBook 风格的静态网站，发布在 Cloudflare。
 
 ## 目录结构
 
@@ -37,7 +37,7 @@ python3 -m http.server 8788 --directory dist
 
 其他命令：
 
-- `pnpm pdf`：生成 A4 纵向 PDF，输出到 `output/初三英语学习导览.pdf`。
+- `pnpm pdf`：生成 A4 纵向 PDF，输出到 `output/<书名>.pdf`（现在是 `output/初中英语学习导览.pdf`）。
 - `pnpm pdf:sample`：只生成样张，范围由 `site.config.mjs` 的 `sample` 指定（现在是介词几节），用来快速看版式。也可以用 `node tools/pdf.mjs --only <路径前缀>` 生成任意几节。
 - `pnpm merge`：按目录顺序把全部页面合并成一个 `guide.md`。
 - `python3 tools/zh_typeset.py content/**/*.md`：检查中文排版，加 `--write` 直接修改。
