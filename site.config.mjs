@@ -13,6 +13,8 @@ export default {
   // 留空则用纯文字封面。coverColors 是叠在图上的文字颜色和图片没盖住处的底色。
   cover: 'content/images/cover.jpg',
   coverColors: { background: '#021a3c', title: '#fffdf7', subtitle: '#f3d27a', footer: '#c9d3e6' },
+  // 网站正式地址（不带结尾斜杠），用于生成 sitemap.xml 和 robots.txt；留空则不生成
+  siteUrl: 'https://learn-english.gamelife.pro',
   // 英文短名：Release 附件名 <slug>-guide-<标签>.pdf
   slug: 'learn-english',
   // pnpm pdf:sample 默认只排文件路径以此开头的页面

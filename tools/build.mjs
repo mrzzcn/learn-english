@@ -5,6 +5,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
 import MarkdownIt from 'markdown-it';
 import config from '../site.config.mjs';
 
@@ -37,7 +38,8 @@ function readSummary() {
 const urlOf = file => {
   const f = file.replace(/\.md$/, '');
   if (f === 'index') return '/';
-  return '/' + f.replace(/(^|\/)index$/, '') + (f.endsWith('index') ? '' : '/');
+  // 每页都以 / 结尾：1-pos/index.md → /1-pos/，1-pos/noun.md → /1-pos/noun/
+  return '/' + f.replace(/\/index$/, '') + '/';
 };
 const outOf = url => path.join(DIST, url, 'index.html');
 
@@ -370,6 +372,31 @@ function foldAnswers(html) {
   return out + html.slice(pos);
 }
 
+// ---------- 站点地图 ----------
+// 需要 config.siteUrl（网站正式地址）；没有配置时跳过，并在构建输出里提示。
+// lastmod 取每个 Markdown 文件最近一次提交的日期，取不到时（没有 git 历史）用构建当天。
+
+function lastModified(file) {
+  try {
+    const d = execFileSync('git', ['log', '-1', '--format=%cs', '--', path.join('content', file)], { cwd: ROOT, encoding: 'utf8' }).trim();
+    if (d) return d;
+  } catch {}
+  return new Date().toISOString().slice(0, 10);
+}
+
+function writeSitemap(pages) {
+  const base = (config.siteUrl || '').replace(/\/+$/, '');
+  if (!base) {
+    console.warn('warning: site.config.mjs 没有设置 siteUrl，跳过 sitemap.xml');
+    return;
+  }
+  const loc = u => base + encodeURI(u);
+  const urls = pages.map(p => `  <url>\n    <loc>${loc(p.url)}</loc>\n    <lastmod>${lastModified(p.file)}</lastmod>\n  </url>`);
+  fs.writeFileSync(path.join(DIST, 'sitemap.xml'),
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`);
+  fs.writeFileSync(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${base}/sitemap.xml\n`);
+}
+
 // ---------- PDF 下载 ----------
 
 // 把 output/ 里的 PDF 复制到 dist/downloads/，返回大小、页数、生成日期；没有 PDF 时返回 null
@@ -443,6 +470,7 @@ function build() {
     }
   });
   fs.writeFileSync(path.join(DIST, 'search-index.json'), JSON.stringify(index));
+  writeSitemap(pages);
 
   // 404
   const nf = { ...pages[0], title: '页面不存在', url: '/404', headings: [], group: { title: null }, first: false };

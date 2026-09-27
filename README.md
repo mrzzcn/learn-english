@@ -103,6 +103,10 @@ git push origin v1.0.0
 
 给已有标签补传 PDF：在仓库的 Actions 页面选择 “Release PDF”，点 Run workflow，填入标签名。
 
+## 站点地图
+
+构建时生成 `dist/sitemap.xml` 和 `dist/robots.txt`，网址前缀取 `site.config.mjs` 的 `siteUrl`（现在是 https://learn-english.gamelife.pro）。每页的 `lastmod` 是对应 Markdown 文件最近一次提交的日期。`siteUrl` 留空时不生成。
+
 ## 网站功能
 
 - 左侧目录按部分分组，可以折叠；中间是正文；右侧是本页小标题导航。
