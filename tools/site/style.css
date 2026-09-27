@@ -148,17 +148,22 @@ a:hover { text-decoration: underline; }
   .layout { grid-template-columns: var(--sidebar-w) minmax(0, 1fr); }
   .toc { display: none; }
 }
-@media (max-width: 860px) {
+/* 目录收进抽屉菜单：iPad 横屏（宽 1024 起）及以上才常驻左侧。
+   竖屏的平板（含 12.9 寸 iPad Pro 竖屏 1024 宽）也用抽屉，所以加了 portrait 条件 */
+@media (max-width: 1023.98px), (orientation: portrait) and (max-width: 1366px) {
   .layout { display: block; }
   .menu-btn { display: block; margin-left: -8px; }
-  .topbar { padding: 0 16px; gap: 8px; }
-  .brand { font-size: 15px; overflow: hidden; text-overflow: ellipsis; }
-  .search { width: 44vw; }
   .sidebar {
     position: fixed; z-index: 20; top: var(--topbar-h); left: 0; width: min(300px, 85vw); background: #fff;
     transform: translateX(-100%); transition: transform .2s; box-shadow: 4px 0 20px rgba(0,0,0,.08);
   }
   body.nav-open .sidebar { transform: none; }
+}
+/* 手机：再收紧顶栏、边距和字号 */
+@media (max-width: 860px) {
+  .topbar { padding: 0 16px; gap: 8px; }
+  .brand { font-size: 15px; overflow: hidden; text-overflow: ellipsis; }
+  .search { width: 44vw; }
   .main { padding: 20px 16px 48px; }
   .markdown h1 { font-size: 25px; }
   .markdown h2 { font-size: 21px; }
