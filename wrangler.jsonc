@@ -4,6 +4,10 @@
 {
   "name": "learn-english",
   "compatibility_date": "2026-09-25",
+  // Workers 可观测性：在 Cloudflare 控制台查看日志和请求指标
+  "observability": {
+    "enabled": true
+  },
   "assets": {
     "directory": "./dist",
     // 找不到页面时返回 dist/404.html
