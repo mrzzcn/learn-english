@@ -50,6 +50,20 @@
   openTarget();
   window.addEventListener('hashchange', openTarget);
 
+  // ---------- 音标录音 ----------
+  // 同一时间只播一段；再点正在播放的按钮就停下
+  let player = null, playing = null;
+  document.addEventListener('click', e => {
+    const b = e.target.closest('button.say');
+    if (!b) return;
+    if (player) { player.pause(); playing?.classList.remove('on'); }
+    if (playing === b) { playing = null; return; }
+    player = new Audio(b.dataset.src);
+    playing = b; b.classList.add('on');
+    player.addEventListener('ended', () => { b.classList.remove('on'); if (playing === b) playing = null; });
+    player.play().catch(() => b.classList.remove('on'));
+  });
+
   // ---------- 全文搜索 ----------
   const input = document.getElementById('q');
   const box = document.getElementById('results');

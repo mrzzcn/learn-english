@@ -197,6 +197,30 @@ a:hover { text-decoration: underline; }
 .markdown details.answer[open] > summary { background: var(--link); color: #fff; }
 @media print { .markdown details.answer > summary { display: none; } }
 
+/* 音标录音按钮：小喇叭 + 英/美 */
+.markdown .say-group { white-space: nowrap; }
+.markdown .ipa { white-space: nowrap; }
+/* 关联音素的颜色标记：<span class="c1">…</span>，同色表示有关联（PDF 用同一组颜色，见 pdf.mjs） */
+.markdown .c1 { color: #c62828; } .markdown .c2 { color: #1565c0; } .markdown .c3 { color: #2e7d32; }
+.markdown .c4 { color: #ef6c00; } .markdown .c5 { color: #6a1b9a; } .markdown .c6 { color: #00838f; }
+.markdown .c7 { color: #ad1457; } .markdown .c8 { color: #5d4037; } .markdown .c9 { color: #455a64; }
+.markdown .c10 { color: #827717; }
+.markdown [class^="c"] > .ipa, .markdown .ipa > [class^="c"] { font-weight: 650; }
+.markdown td[rowspan] { background: #fbfbfc; }
+.markdown button.say {
+  display: inline-flex; align-items: center; gap: 2px; margin: 0 2px; padding: 1px 6px 1px 4px;
+  font: inherit; font-size: 12px; line-height: 1.5; color: var(--link); background: #eef4fb;
+  border: 1px solid #c9dbef; border-radius: 10px; cursor: pointer; vertical-align: 1px;
+}
+.markdown button.say::before {
+  content: ""; width: 12px; height: 12px; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.markdown button.say:hover { background: #dfeaf7; }
+.markdown button.say.on { background: var(--link); color: #fff; border-color: var(--link); }
+@media print { .markdown button.say { display: none; } }
+
 /* 外链用蓝色，不和强调色、站内链接混淆 */
 .markdown a.ext { color: var(--link); }
 

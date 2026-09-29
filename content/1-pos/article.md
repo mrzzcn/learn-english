@@ -34,7 +34,7 @@ an 本来就是“一”，a 是 an 在辅音前脱掉 n 的形式；the 本来�
 
 - I eat an apple **a** day. 我每天吃一个苹果。
 
-**中考易错点：** hour、honest 以字母 h 开头，但 h 不发音，读出来第一个音是元音，要用 an。unit、useful 以字母 u 开头，但第一个音是 /j/，要用 a。
+**中考易错点：** hour、honest 以字母 h 开头，但 h 不发音，读出来第一个音是元音，要用 an。unit、useful 以字母 u 开头，但第一个音是 /j/，要用 a。音素是什么、哪些是元音音素，见第二部分“音标：字母、音素和音标”。
 
 本义依据：[etymonline: an](https://www.etymonline.com/word/an)、[a](https://www.etymonline.com/word/a)、[one](https://www.etymonline.com/word/one)、[hour](https://www.etymonline.com/word/hour)。用法依据：[剑桥英汉词典：a](https://dictionary.cambridge.org/zhs/%E8%AF%8D%E5%85%B8/%E8%8B%B1%E8%AF%AD/a)、[an](https://dictionary.cambridge.org/zhs/%E8%AF%8D%E5%85%B8/%E8%8B%B1%E8%AF%AD/an)、[hour](https://dictionary.cambridge.org/zhs/%E8%AF%8D%E5%85%B8/%E8%8B%B1%E8%AF%AD/hour)、[honest](https://dictionary.cambridge.org/zhs/%E8%AF%8D%E5%85%B8/%E8%8B%B1%E8%AF%AD/honest)、[unit](https://dictionary.cambridge.org/zhs/%E8%AF%8D%E5%85%B8/%E8%8B%B1%E8%AF%AD/unit)；[牛津学习词典：a](https://www.oxfordlearnersdictionaries.com/definition/english/a_1)。
 

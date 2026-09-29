@@ -51,6 +51,15 @@ python3 -m http.server 8788 --directory dist
 - 标题以“答案”开头的小节（如真题的 `## 答案`），网页上默认折叠，读者点 Show Answer 才展开；PDF 里照常显示。答案小节不进搜索索引，免得搜索结果露出答案。要折叠哪些标题，在 `site.config.mjs` 的 `answerHeadings` 里设置。
 - 写作规范见 `notes/writing-plan.md`。
 
+## 音标录音
+
+第二部分的音标页，网页版每个音标和例词后面有“英”“美”小喇叭，点击播放作者录制的发音；PDF 里不放。
+
+- Markdown 写法：`[英](audio:uk/iː)` 播放音素，`[美](audio:us/iː/word)` 播放例词。键是课本写法的音标。
+- 录音在 `content/audio/uk/`、`content/audio/us/`，索引是 `content/audio/index.json`。
+- 更换录音：把源文件放进一个文件夹（文件名格式 `UK_01_[iː]_sheep_音素.mp3`），运行 `node tools/audio.mjs <文件夹>`。脚本调用本机 ffmpeg 统一音量、转成单声道 64 kbps、改成英文文件名，处理好的文件提交到仓库；构建网站不需要 ffmpeg。
+- 构建时找不到对应录音的写法，会在 warnings 里列出。
+
 ## PDF
 
 - **生成方式：** `tools/pdf.mjs` 用 pdfmake 生成 PDF。它和网站共用 `tools/build.mjs` 的交叉引用和句中加粗上色规则，所以两边的强调色、链接一致。
@@ -58,7 +67,7 @@ python3 -m http.server 8788 --directory dist
   - 表格跨页时重复表头，一行不会拆到两页。
   - 标题下方空间不够时，标题会连同后面的内容一起移到下一页。
 - **交叉引用：** 变成 PDF 内部链接，后面加“（第 N 页）”。
-- **字体：** Noto Sans SC（思源黑体，SIL OFL 开源授权）的 Regular 和 Bold 静态 TTF。首次运行时，`tools/fonts.mjs` 通过 jsDelivr 下载到 `tools/fonts/`，约 20 MB，不提交到仓库。
+- **字体：** Noto Sans SC（思源黑体）和 Noto Sans 的 Regular、Bold 静态 TTF，都是 SIL OFL 开源授权。Noto Sans SC 没有国际音标扩展字符，音标部分自动换成 Noto Sans。首次运行时，`tools/fonts.mjs` 通过 jsDelivr 下载到 `tools/fonts/`，约 22 MB，不提交到仓库。
 - **网页下载页：** `content/download.md` 是网站最后一页“PDF 下载”，只在网页上出现，不排进 PDF。构建时，PDF 复制到 `dist/downloads/guide.pdf`，页面里的页数、大小、日期自动填好。
 - **两遍排版：** 为了让页眉和交叉引用的页码准确，脚本先排一遍拿到各节标题的页码，再正式输出。如果第二遍页码有变化，会打印警告。
 

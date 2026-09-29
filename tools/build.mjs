@@ -429,6 +429,65 @@ function copyPdf() {
 }
 
 // 下载页里的占位符：{{PDF_LINK}}、{{PDF_PAGES}}、{{PDF_SIZE}}、{{PDF_DATE}}
+// ---------- 音标录音 ----------
+// Markdown 里写 [英](audio:uk/iː) 播放音素，[美](audio:us/iː/word) 播放例词，
+// 键是课本写法的音标，对应文件见 content/audio/index.json（由 tools/audio.mjs 生成）。
+// 网页上换成小喇叭按钮；PDF 里整段去掉（见 stripAudio）。
+const AUDIO_DIR = path.join(CONTENT, 'audio');
+const AUDIO_INDEX = fs.existsSync(path.join(AUDIO_DIR, 'index.json'))
+  ? JSON.parse(fs.readFileSync(path.join(AUDIO_DIR, 'index.json'), 'utf8')) : { uk: {}, us: {} };
+const AUDIO_RE = /\[([^\]]*)\]\(audio:(uk|us)\/([^)\/]+)(?:\/(word))?\)/g;
+const ACCENT_NAME = { uk: '英式', us: '美式' };
+
+function renderAudio(src, page, problems) {
+  return src.replace(AUDIO_RE, (all, label, accent, ipa, word) => {
+    const e = AUDIO_INDEX[accent]?.[ipa];
+    const file = e && e[word ? 'word' : 'phoneme'];
+    if (!file) { problems.push(`${page.file}: 找不到录音 ${all}`); return label; }
+    const title = `${ACCENT_NAME[accent]}${word ? `例词 ${e.word}` : ` /${ipa}/`}`;
+    return `<button type="button" class="say" data-src="/audio/${file}" title="播放${esc(title)}" aria-label="播放${esc(title)}">${esc(label)}</button>`;
+  });
+}
+// ---------- 表格合并行、音标不断行 ----------
+// 表格正文里第一列留空的行是上一组的延续：从左数连续留空的单元格，
+// 分别和这一组第一行对应列的单元格合并（rowspan）。比如介词表里“介词”“本义”两列一起合并。
+function mergeFirstColumn(html) {
+  return html.replace(/<tbody>([\s\S]*?)<\/tbody>/g, (all, tbody) => {
+    const rows = (tbody.match(/<tr>[\s\S]*?<\/tr>/g) || []).map(r => r.match(/<td[^>]*>[\s\S]*?<\/td>/g) || []);
+    const span = rows.map(r => r.map(() => 1));
+    const keep = rows.map(r => r.map(() => true));
+    const anchor = [];
+    const isEmpty = td => !td.replace(/<td[^>]*>|<\/td>/g, '').trim();
+    rows.forEach((cells, i) => {
+      if (!cells.length || !isEmpty(cells[0]) || !anchor.length) { cells.forEach((_, j) => { anchor[j] = i; }); return; }
+      let j = 0;
+      for (; j < cells.length && isEmpty(cells[j]) && anchor[j] !== undefined; j++) {
+        span[anchor[j]][j]++; keep[i][j] = false;
+      }
+      for (; j < cells.length; j++) anchor[j] = i;
+    });
+    const out = rows.map((cells, i) => '<tr>' + cells.map((td, j) => {
+      if (!keep[i][j]) return '';
+      return span[i][j] > 1 ? td.replace(/^<td/, `<td rowspan="${span[i][j]}"`) : td;
+    }).join('') + '</tr>');
+    return `<tbody>\n${out.join('\n')}\n</tbody>`;
+  });
+}
+
+// 正文里的 /…/ 音标整体不换行，前面紧跟的单词也和它连在一起（只处理标签之外的文字）
+const IPA_TEXT = /(?:[A-Za-z][A-Za-z'’-]* )?\/[^\/\s<>][^\/<>\n]{0,40}?\//g;   // 连同前面的单词，apple /ˈæpl/ 不拆开
+const wrapIpa = html => html.replace(/>([^<]+)</g, (m, text) =>
+  '>' + text.replace(IPA_TEXT, t => `<span class="ipa">${t}</span>`) + '<');
+
+// 相邻的几个录音按钮包进一个不换行的 span，“英”“美”保持在同一行
+// 音标（含颜色标记）和紧跟的按钮也连在一起，/p/ 英 美 不换行
+const groupAudio = html => html
+  .replace(/<button type="button" class="say"[^>]*>[^<]*<\/button>(?:\s*<button type="button" class="say"[^>]*>[^<]*<\/button>)*/g,
+    m => `<span class="say-group">${m}</span>`)
+  .replace(/((?:<span class="c\d+">)?<span class="ipa">[^<]*<\/span>(?:<\/span>)?)\s*(<span class="say-group">(?:\s*<button[^>]*>[^<]*<\/button>)+<\/span>)/g,
+    (m, ipa, btns) => `<span class="say-group">${ipa} ${btns}</span>`);
+const stripAudio = src => src.replace(/[ \t]*\[[^\]]*\]\(audio:[^)]+\)/g, '');
+
 function fillPdfInfo(src, pdf) {
   if (!src.includes('{{PDF_')) return src;
   if (!pdf) return src.replace(/^.*\{\{PDF_LINK\}\}.*$/m, '> PDF 暂未生成，请稍后再来。').replace(/\{\{PDF_\w+\}\}/g, '—');
@@ -461,17 +520,18 @@ function build() {
   copyDir(path.join(CONTENT, 'images'), path.join(DIST, 'content-images-tmp'));
   fs.renameSync(path.join(DIST, 'content-images-tmp'), path.join(DIST, 'images'));
   copyDir(ASSETS, path.join(DIST, 'assets'));
+  if (fs.existsSync(AUDIO_DIR)) copyDir(AUDIO_DIR, path.join(DIST, 'audio'));
   const pdf = copyPdf();
 
   // 图片在 content/images，页面在 content/<部分>/，渲染时路径解析到 /images/…
   const index = [];
   pages.forEach((page, i) => {
-    const src = xref(fillPdfInfo(page.src, pdf), page);
+    const src = xref(renderAudio(fillPdfInfo(page.src, pdf), page, unresolved), page);
     const md = makeRenderer(page, pagesByFile);
     let body = md.render(src).replace(/src="\/(\.\.\/)*images\//g, 'src="/images/');
     // 搜索索引不收答案小节，免得搜索结果直接露出答案
     index.push(...searchEntries(page, body).filter(e => !isAnswerHeading(e.h)));
-    body = foldAnswers(body);
+    body = groupAudio(mergeFirstColumn(wrapIpa(foldAnswers(body))));
     const html = layout({ page, body, groups, prev: pages[i - 1], next: pages[i + 1], pages });
     fs.mkdirSync(path.dirname(outOf(page.url)), { recursive: true });
     fs.writeFileSync(outOf(page.url), html);
@@ -520,7 +580,7 @@ function merge(outFile) {
 }
 
 // 供 tools/pdf.mjs 复用
-export { ROOT, CONTENT, SITE_TITLE, WEB_ONLY, config, readSummary, loadPages, makeXref, markInlineEmphasis, urlOf };
+export { ROOT, CONTENT, SITE_TITLE, WEB_ONLY, config, stripAudio, readSummary, loadPages, makeXref, markInlineEmphasis, urlOf };
 
 // 直接运行时才构建；被 import 时不执行
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

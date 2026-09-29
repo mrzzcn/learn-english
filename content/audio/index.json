@@ -1,0 +1,482 @@
+{
+  "uk": {
+    "iː": {
+      "word": "uk/01-sheep-word.mp3",
+      "source": "iː",
+      "phoneme": "uk/01-sheep-phoneme.mp3"
+    },
+    "ɪ": {
+      "word": "uk/02-ship-word.mp3",
+      "source": "ɪ",
+      "phoneme": "uk/02-ship-phoneme.mp3"
+    },
+    "ɑː": {
+      "word": "uk/03-father-word.mp3",
+      "source": "ɑː",
+      "phoneme": "uk/03-father-phoneme.mp3"
+    },
+    "æ": {
+      "word": "uk/04-hat-word.mp3",
+      "source": "æ",
+      "phoneme": "uk/04-hat-phoneme.mp3"
+    },
+    "ʌ": {
+      "word": "uk/05-cup-word.mp3",
+      "source": "ʌ",
+      "phoneme": "uk/05-cup-phoneme.mp3"
+    },
+    "ɔː": {
+      "word": "uk/06-horse-word.mp3",
+      "source": "ɔː",
+      "phoneme": "uk/06-horse-phoneme.mp3"
+    },
+    "ɒ": {
+      "word": "uk/07-sock-word.mp3",
+      "source": "ɒ",
+      "phoneme": "uk/07-sock-phoneme.mp3"
+    },
+    "uː": {
+      "word": "uk/08-blue-word.mp3",
+      "source": "uː",
+      "phoneme": "uk/08-blue-phoneme.mp3"
+    },
+    "ʊ": {
+      "word": "uk/09-foot-word.mp3",
+      "source": "ʊ",
+      "phoneme": "uk/09-foot-phoneme.mp3"
+    },
+    "e": {
+      "word": "uk/10-head-word.mp3",
+      "source": "e",
+      "phoneme": "uk/10-head-phoneme.mp3"
+    },
+    "ɜː": {
+      "word": "uk/11-bird-word.mp3",
+      "source": "ɜː",
+      "phoneme": "uk/11-bird-phoneme.mp3"
+    },
+    "ə": {
+      "word": "uk/12-above-word.mp3",
+      "source": "ə",
+      "phoneme": "uk/12-above-phoneme.mp3"
+    },
+    "eɪ": {
+      "word": "uk/13-day-word.mp3",
+      "source": "eɪ",
+      "phoneme": "uk/13-day-phoneme.mp3"
+    },
+    "aɪ": {
+      "word": "uk/14-eye-word.mp3",
+      "source": "aɪ",
+      "phoneme": "uk/14-eye-phoneme.mp3"
+    },
+    "ɔɪ": {
+      "word": "uk/15-boy-word.mp3",
+      "source": "ɔɪ",
+      "phoneme": "uk/15-boy-phoneme.mp3"
+    },
+    "əʊ": {
+      "word": "uk/16-nose-word.mp3",
+      "source": "əʊ",
+      "phoneme": "uk/16-nose-phoneme.mp3"
+    },
+    "aʊ": {
+      "word": "uk/17-mouth-word.mp3",
+      "source": "aʊ",
+      "phoneme": "uk/17-mouth-phoneme.mp3"
+    },
+    "ɪə": {
+      "word": "uk/18-ear-word.mp3",
+      "source": "ɪə",
+      "phoneme": "uk/18-ear-phoneme.mp3"
+    },
+    "eə": {
+      "word": "uk/19-hair-word.mp3",
+      "source": "eə",
+      "phoneme": "uk/19-hair-phoneme.mp3"
+    },
+    "ʊə": {
+      "word": "uk/20-pure-word.mp3",
+      "source": "ʊə",
+      "phoneme": "uk/20-pure-phoneme.mp3"
+    },
+    "p": {
+      "word": "uk/21-pen-word.mp3",
+      "source": "p",
+      "phoneme": "uk/21-pen-phoneme.mp3"
+    },
+    "b": {
+      "word": "uk/22-book-word.mp3",
+      "source": "b",
+      "phoneme": "uk/22-book-phoneme.mp3"
+    },
+    "t": {
+      "word": "uk/23-town-word.mp3",
+      "source": "t",
+      "phoneme": "uk/23-town-phoneme.mp3"
+    },
+    "d": {
+      "word": "uk/24-day-word.mp3",
+      "source": "d",
+      "phoneme": "uk/24-day-phoneme.mp3"
+    },
+    "k": {
+      "word": "uk/25-cat-word.mp3",
+      "source": "k",
+      "phoneme": "uk/25-cat-phoneme.mp3"
+    },
+    "ɡ": {
+      "word": "uk/26-give-word.mp3",
+      "source": "g",
+      "phoneme": "uk/26-give-phoneme.mp3"
+    },
+    "f": {
+      "word": "uk/27-fish-word.mp3",
+      "source": "f",
+      "phoneme": "uk/27-fish-phoneme.mp3"
+    },
+    "v": {
+      "word": "uk/28-very-word.mp3",
+      "source": "v",
+      "phoneme": "uk/28-very-phoneme.mp3"
+    },
+    "θ": {
+      "word": "uk/29-think-word.mp3",
+      "source": "θ",
+      "phoneme": "uk/29-think-phoneme.mp3"
+    },
+    "ð": {
+      "word": "uk/30-this-word.mp3",
+      "source": "ð",
+      "phoneme": "uk/30-this-phoneme.mp3"
+    },
+    "s": {
+      "word": "uk/31-say-word.mp3",
+      "source": "s",
+      "phoneme": "uk/31-say-phoneme.mp3"
+    },
+    "z": {
+      "word": "uk/32-zoo-word.mp3",
+      "source": "z",
+      "phoneme": "uk/32-zoo-phoneme.mp3"
+    },
+    "ʃ": {
+      "word": "uk/33-she-word.mp3",
+      "source": "ʃ",
+      "phoneme": "uk/33-she-phoneme.mp3"
+    },
+    "ʒ": {
+      "word": "uk/34-vision-word.mp3",
+      "source": "ʒ",
+      "phoneme": "uk/34-vision-phoneme.mp3"
+    },
+    "tʃ": {
+      "word": "uk/35-cheese-word.mp3",
+      "source": "tʃ",
+      "phoneme": "uk/35-cheese-phoneme.mp3"
+    },
+    "dʒ": {
+      "word": "uk/36-jump-word.mp3",
+      "source": "dʒ",
+      "phoneme": "uk/36-jump-phoneme.mp3"
+    },
+    "m": {
+      "word": "uk/37-moon-word.mp3",
+      "source": "m",
+      "phoneme": "uk/37-moon-phoneme.mp3"
+    },
+    "n": {
+      "word": "uk/38-name-word.mp3",
+      "source": "n",
+      "phoneme": "uk/38-name-phoneme.mp3"
+    },
+    "ŋ": {
+      "word": "uk/39-sing-word.mp3",
+      "source": "ŋ",
+      "phoneme": "uk/39-sing-phoneme.mp3"
+    },
+    "l": {
+      "word": "uk/40-look-word.mp3",
+      "source": "l",
+      "phoneme": "uk/40-look-phoneme.mp3"
+    },
+    "r": {
+      "word": "uk/41-run-word.mp3",
+      "source": "r",
+      "phoneme": "uk/41-run-phoneme.mp3"
+    },
+    "w": {
+      "word": "uk/42-we-word.mp3",
+      "source": "w",
+      "phoneme": "uk/42-we-phoneme.mp3"
+    },
+    "j": {
+      "word": "uk/43-yes-word.mp3",
+      "source": "j",
+      "phoneme": "uk/43-yes-phoneme.mp3"
+    },
+    "h": {
+      "word": "uk/44-hand-word.mp3",
+      "source": "h",
+      "phoneme": "uk/44-hand-phoneme.mp3"
+    },
+    "aɪə": {
+      "word": "uk/45-fire-word.mp3",
+      "source": "aɪə",
+      "phoneme": "uk/45-fire-phoneme.mp3"
+    },
+    "aʊə": {
+      "word": "uk/46-hour-word.mp3",
+      "source": "aʊə",
+      "phoneme": "uk/46-hour-phoneme.mp3"
+    }
+  },
+  "us": {
+    "iː": {
+      "word": "us/01-sheep-word.mp3",
+      "source": "iː",
+      "phoneme": "us/01-sheep-phoneme.mp3"
+    },
+    "ɪ": {
+      "word": "us/02-ship-word.mp3",
+      "source": "ɪ",
+      "phoneme": "us/02-ship-phoneme.mp3"
+    },
+    "ɑː": {
+      "word": "us/03-father-word.mp3",
+      "source": "ɑː",
+      "phoneme": "us/03-father-phoneme.mp3"
+    },
+    "æ": {
+      "word": "us/04-hat-word.mp3",
+      "source": "æ",
+      "phoneme": "us/04-hat-phoneme.mp3"
+    },
+    "ʌ": {
+      "word": "us/05-cup-word.mp3",
+      "source": "ʌ",
+      "phoneme": "us/05-cup-phoneme.mp3"
+    },
+    "ɔː": {
+      "word": "us/06-horse-word.mp3",
+      "source": "ɔː",
+      "phoneme": "us/06-horse-phoneme.mp3"
+    },
+    "uː": {
+      "word": "us/07-blue-word.mp3",
+      "source": "uː",
+      "phoneme": "us/07-blue-phoneme.mp3"
+    },
+    "ʊ": {
+      "word": "us/08-foot-word.mp3",
+      "source": "ʊ",
+      "phoneme": "us/08-foot-phoneme.mp3"
+    },
+    "e": {
+      "word": "us/09-head-word.mp3",
+      "source": "e",
+      "phoneme": "us/09-head-phoneme.mp3"
+    },
+    "ɜːr": {
+      "word": "us/10-bird-word.mp3",
+      "source": "ɝː",
+      "phoneme": "us/10-bird-phoneme.mp3"
+    },
+    "ə": {
+      "word": "us/11-above-word.mp3",
+      "source": "ə",
+      "phoneme": "us/11-above-phoneme.mp3"
+    },
+    "ər": {
+      "word": "us/12-mother-word.mp3",
+      "source": "ɚ",
+      "phoneme": "us/12-mother-phoneme.mp3"
+    },
+    "eɪ": {
+      "word": "us/13-day-word.mp3",
+      "source": "eɪ",
+      "phoneme": "us/13-day-phoneme.mp3"
+    },
+    "aɪ": {
+      "word": "us/14-eye-word.mp3",
+      "source": "aɪ",
+      "phoneme": "us/14-eye-phoneme.mp3"
+    },
+    "ɔɪ": {
+      "word": "us/15-boy-word.mp3",
+      "source": "ɔɪ",
+      "phoneme": "us/15-boy-phoneme.mp3"
+    },
+    "oʊ": {
+      "word": "us/16-nose-word.mp3",
+      "source": "oʊ",
+      "phoneme": "us/16-nose-phoneme.mp3"
+    },
+    "aʊ": {
+      "word": "us/17-mouth-word.mp3",
+      "source": "aʊ",
+      "phoneme": "us/17-mouth-phoneme.mp3"
+    },
+    "p": {
+      "word": "us/18-pen-word.mp3",
+      "source": "p",
+      "phoneme": "us/18-pen-phoneme.mp3"
+    },
+    "b": {
+      "word": "us/19-book-word.mp3",
+      "source": "b",
+      "phoneme": "us/19-book-phoneme.mp3"
+    },
+    "t": {
+      "word": "us/20-town-word.mp3",
+      "source": "t",
+      "phoneme": "us/20-town-phoneme.mp3"
+    },
+    "t̬": {
+      "word": "us/21-cutting-word.mp3",
+      "source": "t̬",
+      "phoneme": "us/21-cutting-phoneme.mp3"
+    },
+    "d": {
+      "word": "us/22-day-word.mp3",
+      "source": "d",
+      "phoneme": "us/22-day-phoneme.mp3"
+    },
+    "k": {
+      "word": "us/23-cat-word.mp3",
+      "source": "k",
+      "phoneme": "us/23-cat-phoneme.mp3"
+    },
+    "ɡ": {
+      "word": "us/24-give-word.mp3",
+      "source": "g",
+      "phoneme": "us/24-give-phoneme.mp3"
+    },
+    "f": {
+      "word": "us/25-fish-word.mp3",
+      "source": "f",
+      "phoneme": "us/25-fish-phoneme.mp3"
+    },
+    "v": {
+      "word": "us/26-very-word.mp3",
+      "source": "v",
+      "phoneme": "us/26-very-phoneme.mp3"
+    },
+    "θ": {
+      "word": "us/27-think-word.mp3",
+      "source": "θ",
+      "phoneme": "us/27-think-phoneme.mp3"
+    },
+    "ð": {
+      "word": "us/28-this-word.mp3",
+      "source": "ð",
+      "phoneme": "us/28-this-phoneme.mp3"
+    },
+    "s": {
+      "word": "us/29-say-word.mp3",
+      "source": "s",
+      "phoneme": "us/29-say-phoneme.mp3"
+    },
+    "z": {
+      "word": "us/30-zoo-word.mp3",
+      "source": "z",
+      "phoneme": "us/30-zoo-phoneme.mp3"
+    },
+    "ʃ": {
+      "word": "us/31-she-word.mp3",
+      "source": "ʃ",
+      "phoneme": "us/31-she-phoneme.mp3"
+    },
+    "ʒ": {
+      "word": "us/32-vision-word.mp3",
+      "source": "ʒ",
+      "phoneme": "us/32-vision-phoneme.mp3"
+    },
+    "tʃ": {
+      "word": "us/33-cheese-word.mp3",
+      "source": "tʃ",
+      "phoneme": "us/33-cheese-phoneme.mp3"
+    },
+    "dʒ": {
+      "word": "us/34-jump-word.mp3",
+      "source": "dʒ",
+      "phoneme": "us/34-jump-phoneme.mp3"
+    },
+    "m": {
+      "word": "us/35-moon-word.mp3",
+      "source": "m",
+      "phoneme": "us/35-moon-phoneme.mp3"
+    },
+    "n": {
+      "word": "us/36-name-word.mp3",
+      "source": "n",
+      "phoneme": "us/36-name-phoneme.mp3"
+    },
+    "ŋ": {
+      "word": "us/37-sing-word.mp3",
+      "source": "ŋ",
+      "phoneme": "us/37-sing-phoneme.mp3"
+    },
+    "l": {
+      "word": "us/38-look-word.mp3",
+      "source": "l",
+      "phoneme": "us/38-look-phoneme.mp3"
+    },
+    "r": {
+      "word": "us/39-run-word.mp3",
+      "source": "r",
+      "phoneme": "us/39-run-phoneme.mp3"
+    },
+    "w": {
+      "word": "us/40-we-word.mp3",
+      "source": "w",
+      "phoneme": "us/40-we-phoneme.mp3"
+    },
+    "j": {
+      "word": "us/41-yes-word.mp3",
+      "source": "j",
+      "phoneme": "us/41-yes-phoneme.mp3"
+    },
+    "h": {
+      "word": "us/42-hand-word.mp3",
+      "source": "h",
+      "phoneme": "us/42-hand-phoneme.mp3"
+    },
+    "ɪr": {
+      "word": "us/43-near-word.mp3",
+      "source": "ɪr"
+    },
+    "er": {
+      "word": "us/44-hair-word.mp3",
+      "source": "ɛr"
+    },
+    "ʊr": {
+      "word": "us/45-tour-word.mp3",
+      "source": "ʊr"
+    },
+    "ɑːr": {
+      "word": "us/46-car-word.mp3",
+      "source": "ɑr"
+    },
+    "ɔːr": {
+      "word": "us/47-north-word.mp3",
+      "source": "ɔr"
+    },
+    "ts": {
+      "word": "us/48-its-word.mp3",
+      "source": "ts"
+    },
+    "dz": {
+      "word": "us/49-odds-word.mp3",
+      "source": "dz"
+    },
+    "tr": {
+      "word": "us/50-tree-word.mp3",
+      "source": "tr"
+    },
+    "dr": {
+      "word": "us/51-dream-word.mp3",
+      "source": "dr"
+    }
+  }
+}

@@ -34,7 +34,7 @@
 13. 查证方法：剑桥网站会弹人机验证，不要尝试绕过；用 curl 抓牛津学习词典（`https://www.oxfordlearnersdictionaries.com/definition/english/<word>_1`，带浏览器 User-Agent）核对义项和例句，用 WebFetch 读 etymonline。没核对过的说法不写。 查词遇到障碍时，可以用 openetymology 接口：`curl -s "https://openetymology.com/api/words/<word>?mode=encn"`，返回 JSON，含组成部分拆解（morphemes 的 piece 与 gloss）、中文释义、例句和词源分析。它是补充来源，和 etymonline 说法冲突时以 etymonline 为准。
 
 **版式规则**
-14. 用 Markdown，不考虑排版。同类内容合成一张表；Markdown 不能合并单元格，同组的后续行第一列留空。
+14. 用 Markdown，不考虑排版。同类内容合成一张表；同组的后续行第一列留空，构建时自动合并单元格（网页用 rowspan，PDF 去掉同组之间的横线），从左数连续留空的列一起合并。
 15. 表格单元格里换行用 `<br/>`。
 16. 不写"待写"占位块。本单元的内容要全部写完。
 17. 每个知识点篇幅适中：一张表 + 两三段说明为宜，不写长篇议论。

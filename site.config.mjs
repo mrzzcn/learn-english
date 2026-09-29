@@ -4,11 +4,11 @@ export default {
   // 网页标题、侧栏顶部、PDF 封面标题、PDF 文件名 output/<title>.pdf、Release 标题
   title: '初中英语学习导览',
   // PDF 封面副标题
-  subtitle: '词性 · 词源法记单词 · 简单句 · 复合句 · 时态',
+  subtitle: '词性 · 音标与词源 · 简单句 · 复合句 · 时态',
   // PDF 封面上的面向对象
   audience: '面向初中生',
   // 网页 <meta name="description"> 和 PDF 文档属性里的主题
-  description: '面向初中生的英语学习导览：词性、词源法记单词、简单句、复合句、时态，附河南中考真题。',
+  description: '面向初中生的英语学习导览：词性、音标与词源、简单句、复合句、时态，附河南中考真题。',
   // PDF 封面插图（相对项目根目录）：铺满第一页，书名和副标题叠在顶部夜空，面向对象和日期叠在底部。
   // 留空则用纯文字封面。coverColors 是叠在图上的文字颜色和图片没盖住处的底色。
   cover: 'content/images/cover.jpg',

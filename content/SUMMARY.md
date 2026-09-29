@@ -22,9 +22,13 @@
 - [动词：容易混的地方](1-pos/verb-confusions.md)
 - [连词与感叹词](1-pos/conj-interj.md)
 
-## 第二部分：词源法记单词
+## 第二部分：记单词：音标与词源
 
-- [词源法概述](2-etymology/index.md)
+- [记单词概述](2-etymology/index.md)
+- [音标：字母、音素和音标](2-etymology/phonetics.md)
+- [元音：单元音和双元音](2-etymology/vowels.md)
+- [辅音：清辅音和浊辅音](2-etymology/consonants.md)
+- [连读、弱读和重音](2-etymology/connected-speech.md)
 - [拆词原理与四步法](2-etymology/method.md)
 - [否定前缀](2-etymology/negative-prefix.md)
 - [方向和程度前缀](2-etymology/prefix.md)

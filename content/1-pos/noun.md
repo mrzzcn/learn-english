@@ -65,7 +65,7 @@ news 很特别：它的本义是“新的东西”，结尾的 s 原来就是复
 | 类型 | 变化方法 | 从读音和来源怎么推出来 | 例词 |
 | --- | --- | --- | --- |
 | 规则变化 | 一般加 -s | 复数词尾原来写作 -es，大多数词里的 e 后来不读了，也不写了，只剩 -s | apple → apples，tree → trees，banana → bananas |
-| | 以 s、x、ch、sh 结尾，加 -es | 这些词本身就以 s、x、ch、sh 这种咝咝声结尾。在咝咝声后面，-es 里那个 e 的读音保留了下来，所以拼写也留着 e，读 /ɪz/ | box → boxes，bus → buses，peach → peaches |
+| | 以 s、x、ch、sh 结尾，加 -es | 这些词本身就以 s、x、ch、sh 这种咝咝声结尾。在咝咝声后面，-es 里那个 e 的读音保留了下来，所以拼写也留着 e，读 /ɪz/。-s 什么时候读 /s/、/z/、/ɪz/，见第二部分“清浊成对：-s 和 -ed 为什么有三种读法” | box → boxes，bus → buses，peach → peaches |
 | | 辅音字母 + y 结尾，变 y 为 i 再加 -es | 只是拼写有变化，读音上只是在词尾加了 /z/ | strawberry → strawberries，family → families |
 | | 元音字母 + y 结尾，直接加 -s | 读音同上，拼写上 y 不变 | day → days，monkey → monkeys |
 | | 一些以 f 或 fe 结尾的词，变成 -ves | 看复数怎么读：leaves 读 /liːvz/，f 的音在复数里变成了 v，拼写跟着读音走。roofs 仍然读 f，所以只加 -s | leaf → leaves，knife → knives<br/>但 roof → roofs |

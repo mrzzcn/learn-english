@@ -9,7 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import MarkdownIt from 'markdown-it';
 import pdfmake from 'pdfmake';
-import { ROOT, CONTENT, SITE_TITLE, WEB_ONLY, config, COPYRIGHT, readSummary, loadPages, makeXref, markInlineEmphasis } from './build.mjs';
+import { ROOT, CONTENT, SITE_TITLE, WEB_ONLY, config, stripAudio, COPYRIGHT, readSummary, loadPages, makeXref, markInlineEmphasis } from './build.mjs';
 import { ensureFonts } from './fonts.mjs';
 
 // ---------- 参数 ----------
@@ -34,6 +34,13 @@ const C = {
 // ---------- 字体 ----------
 
 const FONT = 'Noto Sans SC';
+// 关联音素的颜色标记 <span class="cN">，和网页 style.css 里的颜色一致
+const PAIR_COLORS = { c1: '#c62828', c2: '#1565c0', c3: '#2e7d32', c4: '#ef6c00', c5: '#6a1b9a', c6: '#00838f', c7: '#ad1457', c8: '#5d4037', c9: '#455a64', c10: '#827717' };
+// 国际音标扩展字符、音标符号、附加符号（ɪ ə ʊ ː ˈ ŋ t̬ 等）用 Noto Sans 排
+const LATIN_FONT = 'Noto Sans';
+const IPA_CHARS = '\u014b\u0250-\u02ff\u0300-\u036f\u1d00-\u1dbf';
+const IPA_SPLIT = new RegExp(`([${IPA_CHARS}]+)`);
+const IPA_TEST = new RegExp(`^[${IPA_CHARS}]+$`);
 
 // 封面插图：按页宽缩放、顶部对齐，下方多出的部分裁掉
 const COVER = config.cover ? path.resolve(ROOT, config.cover) : null;
@@ -59,16 +66,21 @@ function makeMd() {
 function inlineToRuns(children, ctx) {
   const runs = [];
   const images = [];
-  let bold = 0, hl = 0, em = 0, u = 0, link = null;
+  let bold = 0, hl = 0, em = 0, u = 0, link = null, pair = null;
   const push = (text, extra = {}) => {
     if (!text) return;
     const r = { text };
     if (bold) r.bold = true;
     if (hl) r.color = C.emph;
+    if (pair) { r.color = pair; r.bold = true; }
     if (u) r.decoration = 'underline';
     if (link) Object.assign(r, link.attrs);
     Object.assign(r, extra);
-    runs.push(r);
+    // 国际音标字符 Noto Sans SC 里没有，这几段单独换成 Noto Sans
+    for (const part of text.split(IPA_SPLIT)) {
+      if (!part) continue;
+      runs.push(IPA_TEST.test(part) ? { ...r, text: part, font: LATIN_FONT } : { ...r, text: part });
+    }
   };
   for (const t of children) {
     switch (t.type) {
@@ -85,6 +97,8 @@ function inlineToRuns(children, ctx) {
         if (/^<br\s*\/?>/.test(h)) push('\n');
         else if (h.startsWith('<u>')) u++;
         else if (h.startsWith('</u>')) u--;
+        else if (h.startsWith('<span')) pair = PAIR_COLORS[(h.match(/class="(c\d+)"/) || [])[1]] || null;
+        else if (h.startsWith('</span>')) pair = null;
         break;
       }
       case 'link_open': link = ctx.resolveLink(t.attrGet('href') || ''); break;
@@ -226,6 +240,10 @@ function tokensToContent(tokens, ctx) {
         minPt[k] = Math.max(minPt[k], Math.max(...c.images.map(im => im.width)) + 12);   // 图片不能超出单元格
       }
       need[k] = Math.max(need[k], w);
+      // 音标 /…/ 当作一个不能拆的词，避免在斜线处断行
+      for (const t of c.runs.map(runText).join('').match(/\/[^\/\n]{1,40}?\//g) || []) {
+        minPt[k] = Math.max(minPt[k], textWidthUnits(t) * 9.3 * 0.62 + 12);
+      }
       for (const run of c.runs) for (const word of runText(run).match(/[A-Za-z'’.\-]+/g) || []) {
         minPt[k] = Math.max(minPt[k], word.length * (run.bold || c.head ? 5.9 : 5.4) + 12);
       }
@@ -256,6 +274,23 @@ function tokensToContent(tokens, ctx) {
       while (cells.length < ncol) cells.push({ text: '' });
       return cells;
     });
+    // 第一列留空的行是上一组的延续：从左数连续留空的单元格和这一组第一行对应列“合并”。
+    // pdfmake 的 rowSpan 跨页时会在下一页留出大片空白，所以这里不用 rowSpan，
+    // 而是去掉同组单元格之间的横线，看起来是一个格子（网页用真正的 rowspan）。
+    const anchor = [];
+    const groups = [];   // [列, 起始行, 结束行]
+    const emptyCell = c => !c || (!c.runs.map(runText).join('').trim() && !c.images.length);
+    rows.forEach((r, i) => {
+      if (r.head) { anchor.length = 0; return; }
+      if (!emptyCell(r.cells[0]) || !anchor.length) { r.cells.forEach((_, j) => { anchor[j] = [i, i]; groups.push([j, anchor[j]]); }); return; }
+      let j = 0;
+      for (; j < r.cells.length && emptyCell(r.cells[j]) && anchor[j]; j++) anchor[j][1] = i;
+      for (; j < r.cells.length; j++) { anchor[j] = [i, i]; groups.push([j, anchor[j]]); }
+    });
+    for (const [j, [from, to]] of groups) {
+      if (to === from) continue;
+      for (let i = from; i <= to; i++) body[i][j].border = [true, i === from, true, i === to];
+    }
     return {
       table: { headerRows, keepWithHeaderRows: headerRows ? 1 : 0, dontBreakRows: true, widths: widths.map(w => w * scale), body },
       layout: 'grid',
@@ -398,7 +433,7 @@ async function main() {
         return { image: file, width: inCellWidth };
       },
     };
-    const src = xref(page.src, page);
+    const src = xref(stripAudio(page.src), page);   // PDF 里不放音标录音按钮
     const nodes = tokensToContent(md.parse(src, {}), ctx);
     // 紧跟表格的标题：要放得下表头和第一行，第一行有简笔画时更高
     nodes.forEach((n, k) => {
@@ -496,6 +531,12 @@ async function main() {
       bold: path.join(ROOT, 'tools/fonts/NotoSansSC-Bold.ttf'),
       italics: path.join(ROOT, 'tools/fonts/NotoSansSC-Regular.ttf'),
       bolditalics: path.join(ROOT, 'tools/fonts/NotoSansSC-Bold.ttf'),
+    },
+    [LATIN_FONT]: {
+      normal: path.join(ROOT, 'tools/fonts/NotoSans-Regular.ttf'),
+      bold: path.join(ROOT, 'tools/fonts/NotoSans-Bold.ttf'),
+      italics: path.join(ROOT, 'tools/fonts/NotoSans-Regular.ttf'),
+      bolditalics: path.join(ROOT, 'tools/fonts/NotoSans-Bold.ttf'),
     },
   });
   pdfmake.setUrlAccessPolicy(() => false);                              // 不下载任何网络资源
