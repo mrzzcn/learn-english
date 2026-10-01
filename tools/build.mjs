@@ -14,8 +14,11 @@ const CONTENT = path.join(ROOT, 'content');
 const DIST = path.join(ROOT, 'dist');
 const ASSETS = path.join(ROOT, 'tools', 'site');
 const SITE_TITLE = config.title;
-const PDF_FILE = path.join(ROOT, 'output', `${SITE_TITLE}.pdf`);   // tools/pdf.mjs 的输出
-const PDF_URL = '/downloads/guide.pdf';
+// tools/pdf.mjs 的两种输出：阅读版（屏幕上看）和打印版（双面打印、装订）
+const PDFS = [
+  { key: 'PDF', file: path.join(ROOT, 'output', `${SITE_TITLE}.pdf`), url: '/downloads/guide.pdf', name: `${SITE_TITLE}.pdf`, label: '下载阅读版' },
+  { key: 'PRINT', file: path.join(ROOT, 'output', `${SITE_TITLE}-打印版.pdf`), url: '/downloads/guide-print.pdf', name: `${SITE_TITLE}-打印版.pdf`, label: '下载打印版' },
+];
 // 只在网页上出现、不排进 PDF 的页面
 const WEB_ONLY = new Set(config.webOnly || []);
 
@@ -239,7 +242,8 @@ function makeRenderer(page, pagesByFile) {
     if (/^https?:\/\//.test(href)) {
       t.attrSet('target', '_blank'); t.attrSet('rel', 'noopener'); t.attrJoin('class', 'ext');
     } else if (href.endsWith('.pdf')) {
-      t.attrSet('download', `${SITE_TITLE}.pdf`); t.attrJoin('class', 'btn');
+      const pdf = PDFS.find(x => x.url === href);
+      t.attrSet('download', pdf ? pdf.name : path.posix.basename(href)); t.attrJoin('class', 'btn');
     } else if (/\.md(#.*)?$/.test(href)) {
       const [f, hash] = href.split('#');
       const target = pagesByFile[resolve(f)];
@@ -412,23 +416,26 @@ function writeSitemap(pages) {
 
 // 把 output/ 里的 PDF 复制到 dist/downloads/，返回大小、页数、生成日期；没有 PDF 时返回 null
 function copyPdf() {
-  if (!fs.existsSync(PDF_FILE)) {
-    console.warn(`warning: 没有找到 ${path.relative(ROOT, PDF_FILE)}，下载页不提供文件。先运行 pnpm pdf。`);
-    return null;
+  const info = {};
+  for (const p of PDFS) {
+    if (!fs.existsSync(p.file)) {
+      console.warn(`warning: 没有找到 ${path.relative(ROOT, p.file)}，下载页不提供这个文件。先运行 pnpm pdf。`);
+      continue;
+    }
+    const out = path.join(DIST, p.url);
+    fs.mkdirSync(path.dirname(out), { recursive: true });
+    fs.copyFileSync(p.file, out);
+    const stat = fs.statSync(p.file);
+    info[p.key] = {
+      ...p,
+      size: (stat.size / 1024 / 1024).toFixed(1) + ' MB',
+      pages: (fs.readFileSync(p.file).toString('latin1').match(/\/Type \/Page\b/g) || []).length,
+      date: stat.mtime.toISOString().slice(0, 10),
+    };
   }
-  const out = path.join(DIST, PDF_URL);
-  fs.mkdirSync(path.dirname(out), { recursive: true });
-  fs.copyFileSync(PDF_FILE, out);
-  const buf = fs.readFileSync(PDF_FILE);
-  const stat = fs.statSync(PDF_FILE);
-  return {
-    size: (stat.size / 1024 / 1024).toFixed(1) + ' MB',
-    pages: (buf.toString('latin1').match(/\/Type \/Page\b/g) || []).length,
-    date: stat.mtime.toISOString().slice(0, 10),
-  };
+  return info;
 }
 
-// 下载页里的占位符：{{PDF_LINK}}、{{PDF_PAGES}}、{{PDF_SIZE}}、{{PDF_DATE}}
 // ---------- 音标录音 ----------
 // Markdown 里写 [英](audio:uk/iː) 播放音素，[美](audio:us/iː/word) 播放例词，
 // 键是课本写法的音标，对应文件见 content/audio/index.json（由 tools/audio.mjs 生成）。
@@ -488,14 +495,19 @@ const groupAudio = html => html
     (m, ipa, btns) => `<span class="say-group">${ipa} ${btns}</span>`);
 const stripAudio = src => src.replace(/[ \t]*\[[^\]]*\]\(audio:[^)]+\)/g, '');
 
-function fillPdfInfo(src, pdf) {
-  if (!src.includes('{{PDF_')) return src;
-  if (!pdf) return src.replace(/^.*\{\{PDF_LINK\}\}.*$/m, '> PDF 暂未生成，请稍后再来。').replace(/\{\{PDF_\w+\}\}/g, '—');
-  return src
-    .replace('{{PDF_LINK}}', `[下载 PDF](${PDF_URL})`)
-    .replace(/\{\{PDF_PAGES\}\}/g, String(pdf.pages))
-    .replace(/\{\{PDF_SIZE\}\}/g, pdf.size)
-    .replace(/\{\{PDF_DATE\}\}/g, pdf.date);
+// 下载页里的占位符：{{PDF_LINK}} {{PDF_PAGES}} {{PDF_SIZE}} {{PDF_DATE}}（阅读版），
+// {{PRINT_LINK}} {{PRINT_PAGES}} {{PRINT_SIZE}} {{PRINT_DATE}}（打印版）
+function fillPdfInfo(src, info) {
+  if (!/\{\{(PDF|PRINT)_/.test(src)) return src;
+  for (const p of PDFS) {
+    const d = info[p.key];
+    src = src
+      .replace(new RegExp(`\\{\\{${p.key}_LINK\\}\\}`, 'g'), d ? `[${p.label}](${p.url})` : '暂未生成')
+      .replace(new RegExp(`\\{\\{${p.key}_PAGES\\}\\}`, 'g'), d ? String(d.pages) : '—')
+      .replace(new RegExp(`\\{\\{${p.key}_SIZE\\}\\}`, 'g'), d ? d.size : '—')
+      .replace(new RegExp(`\\{\\{${p.key}_DATE\\}\\}`, 'g'), d ? d.date : '—');
+  }
+  return src;
 }
 
 // ---------- 主流程 ----------

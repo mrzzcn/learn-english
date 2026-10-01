@@ -37,7 +37,7 @@ python3 -m http.server 8788 --directory dist
 
 其他命令：
 
-- `pnpm pdf`：生成 A4 纵向 PDF，输出到 `output/<书名>.pdf`（现在是 `output/初中英语学习导览.pdf`）。
+- `pnpm pdf`：生成两个 A4 纵向 PDF：阅读版 `output/<书名>.pdf` 和双面打印版 `output/<书名>-打印版.pdf`。单独生成打印版用 `node tools/pdf.mjs --print`。
 - `pnpm pdf:sample`：只生成样张，范围由 `site.config.mjs` 的 `sample` 指定（现在是介词几节），用来快速看版式。也可以用 `node tools/pdf.mjs --only <路径前缀>` 生成任意几节。
 - `pnpm merge`：按目录顺序把全部页面合并成一个 `guide.md`。
 - `python3 tools/zh_typeset.py content/**/*.md`：检查中文排版，加 `--write` 直接修改。
@@ -63,12 +63,13 @@ python3 -m http.server 8788 --directory dist
 ## PDF
 
 - **生成方式：** `tools/pdf.mjs` 用 pdfmake 生成 PDF。它和网站共用 `tools/build.mjs` 的交叉引用和句中加粗上色规则，所以两边的强调色、链接一致。
-- **版式：** 页边距左 18 mm（留装订余量）、上 15 mm、右 12 mm、下 12 mm。封面、带页码的目录；每个部分从新的一页开始；页眉左边是部分名、右边是本节标题；页脚是页码。
+- **两个版本：** 阅读版页边距四周收窄（左右 12 mm）。打印版按双面打印装订排：内侧（装订侧）18 mm、外侧 12 mm，偶数页左右镜像；页眉小节名在外侧；封面背面留白；每个部分从奇数页开始，需要时自动空出一页，空白页不印页眉页脚。
+- **版式：** 上 15 mm、下 12 mm。封面、带页码的目录；每个部分从新的一页开始；页眉左边是部分名、右边是本节标题；页脚是页码。
   - 表格跨页时重复表头，一行不会拆到两页。
   - 标题下方空间不够时，标题会连同后面的内容一起移到下一页。
 - **交叉引用：** 变成 PDF 内部链接，后面加“（第 N 页）”。
 - **字体：** Noto Sans SC（思源黑体）和 Noto Sans 的 Regular、Bold 静态 TTF，都是 SIL OFL 开源授权。Noto Sans SC 没有国际音标扩展字符，音标部分自动换成 Noto Sans。首次运行时，`tools/fonts.mjs` 通过 jsDelivr 下载到 `tools/fonts/`，约 22 MB，不提交到仓库。
-- **网页下载页：** `content/download.md` 是网站最后一页“PDF 下载”，只在网页上出现，不排进 PDF。构建时，PDF 复制到 `dist/downloads/guide.pdf`，页面里的页数、大小、日期自动填好。
+- **网页下载页：** `content/download.md` 是网站最后一页“PDF 下载”，只在网页上出现，不排进 PDF。构建时，两个 PDF 复制到 `dist/downloads/guide.pdf` 和 `guide-print.pdf`，页面里的页数、大小、日期自动填好。
 - **两遍排版：** 为了让页眉和交叉引用的页码准确，脚本先排一遍拿到各节标题的页码，再正式输出。如果第二遍页码有变化，会打印警告。
 
 ## 发布到 Cloudflare
@@ -100,7 +101,7 @@ pnpm dlx wrangler deploy
 
 ## 发布 PDF 到 GitHub Release
 
-推送版本标签后，GitHub Actions（`.github/workflows/release.yml`）会生成 PDF，建一个 Release，并把 PDF 作为附件上传，附件名为 `learn-english-guide-<标签>.pdf`。
+推送版本标签后，GitHub Actions（`.github/workflows/release.yml`）会生成 PDF，建一个 Release，并把两个 PDF 作为附件上传：阅读版 `learn-english-guide-<标签>.pdf`、打印版 `learn-english-guide-<标签>-print.pdf`。
 
 ```bash
 git tag v1.0.0
